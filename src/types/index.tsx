@@ -4,6 +4,6 @@ export interface Customer {
     DatabaseName: string,
     Username: string,
     NoAccount: number,
-    DateEpired: Date,
+    DateEpired: string,
     NoDayUpdate: number
 }

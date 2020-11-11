@@ -7,6 +7,7 @@ function get_list_customer(req: any) {
         searchKey: req.searchKey,
         page: req.page
     }
+    
     return axios.post(`${URL}/nap/get_list_customer`, body)
     .then((res)=>{
         return res.data

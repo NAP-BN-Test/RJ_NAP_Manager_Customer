@@ -7,14 +7,42 @@ export interface Get_List_Customer {
   customer: Customer;
 }
 
-function act_get_list_customer(customer: Customer) {
+export type AUTHENTICATE = Get_List_Customer;
+
+// function gọi đến reducer
+function func_get_list_customer(customer: any) {
+  return {
+    type: constants.GET_LIST_CUSTOMER,
+    customers: customer,
+  };
+}
+function act_alert_success(messages: string) {
+  return {
+      type: constants.ALERT_SUCCESS,
+      message: messages
+  }
+};
+function act_alert_error(messages: string) {
+  return {
+      type: constants.ALERT_ERROR,
+      message: messages
+  }
+};
+
+// action xử lý
+function act_get_list_customer() {
   return (dispatch: any) => {
     let body = {
       searchKey: "",
-      page: "",
+      page: 1,
     };
     Services.get_list_customer(body).then(async (res) => {
-      console.log(res);
+      if (res.status == "1") {
+        let customers = res.array;
+        dispatch(func_get_list_customer(customers));
+      } else {
+        dispatch(act_alert_error("Lấy dữ liệu thất bại!"));
+      }
     });
   };
 }

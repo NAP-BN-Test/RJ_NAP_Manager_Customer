@@ -1,19 +1,28 @@
 import React from "react";
-import { List } from "antd";
+import { Customer } from "../../types";
+import CustomerItem from "./CustomerItem";
 
-function CustomerList() {
-  const data = [
-    "Racing car sprays burning fuel into crowd.",
-    "Japanese princess to wed commoner.",
-    "Australian walks 100km after outback crash.",
-    "Man charged over missing wedding girl.",
-    "Los Angeles battles huge wildfires.",
-  ];
+interface PropsCustomerList {
+  customers: Array<Customer>;
+}
+
+function CustomerList(props: PropsCustomerList) {
   return (
-    <List
-      dataSource={data}
-      renderItem={(item) => <List.Item>{item}</List.Item>}
-    />
+    <div>
+      {props.customers.map((customer) => {
+        return (
+          <CustomerItem
+            CompanyName={customer.CompanyName}
+            DatabaseName={customer.DatabaseName}
+            Status={customer.Status}
+            Username={customer.Username}
+            NoAccount={customer.NoAccount}
+            DateEpired={customer.DateEpired}
+            NoDayUpdate={customer.NoDayUpdate}
+          />
+        );
+      })}
+    </div>
   );
 }
 

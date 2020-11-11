@@ -9,12 +9,18 @@ function CustomerItem(props: Customer) {
         {props.DatabaseName}
       </Descriptions.Item>
       <Descriptions.Item label="userDB">{props.Username}</Descriptions.Item>
-      <Descriptions.Item label="Trạng Thái">{props.Status}</Descriptions.Item>
+      <Descriptions.Item label="Trạng Thái">
+        {props.Status ? "Đang hoạt động" : "Đã dừng"}
+      </Descriptions.Item>
       <Descriptions.Item label="Số lượng account">
         {props.NoAccount}
       </Descriptions.Item>
-      <Descriptions.Item label="Ngày hết hạn">{props.DateEpired}</Descriptions.Item>
-      <Descriptions.Item label="Ngày cập nhật">{props.NoDayUpdate}</Descriptions.Item>
+      <Descriptions.Item label="Ngày hết hạn">
+        {props.DateEpired}
+      </Descriptions.Item>
+      <Descriptions.Item label="Ngày cập nhật">
+        {props.NoDayUpdate}
+      </Descriptions.Item>
     </Descriptions>
   );
 }
