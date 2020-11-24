@@ -1,0 +1,7 @@
+.RowCustomer{
+    border: 1px solid;
+    border-color: black;
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
