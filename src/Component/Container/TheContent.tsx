@@ -14,7 +14,7 @@ function TheContent(props: PropsTheContent) {
       <Suspense fallback={props.loading}>
         <Switch>
           {routes.map((route, idx) => {
-            console.log(route.name);
+            // console.log(route.name);
             return (
               <Route
                 key={idx}

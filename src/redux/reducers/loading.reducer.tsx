@@ -8,7 +8,6 @@ const initState = {
 function rdc_loading(state = initState, action: any) {
   switch (action.type) {
     case SHOW_LOADING:
-      console.log(state);
       return {
         visible: true,
         message: action.message,

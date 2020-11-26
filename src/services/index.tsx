@@ -73,7 +73,7 @@ function deleteDB(req: any){
   return axios
     .post(`${URL}/nap/delete_db`, body)
     .then((res)=>{
-      console.log(res);
+      //console.log(res);
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -95,7 +95,7 @@ function addCustomer(req: any){
   return axios
     .post(`${URL}/nap/add_customer`, body)
     .then((res)=>{
-      console.log(res);
+      // console.log(res);
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -113,7 +113,7 @@ function create_database(req: any){
   return axios
     .post(`${URL}/nap/create_db`, bodyAddatabase)
     .then((res)=>{
-      console.log(res);
+      //console.log(res);
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -129,7 +129,7 @@ function create_table(req: any){
   return axios
     .post(`${URL}/nap/create_table`, bodyAddatabase)
     .then((res)=>{
-      console.log(res);
+      //console.log(res);
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -145,7 +145,7 @@ function add_databse_table(req: any){
   return axios
     .post(`${URL}/nap/add_database_table`, bodyAddatabase)
     .then((res)=>{
-      console.log(res);
+      //console.log(res);
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -162,7 +162,7 @@ function insert_country(req: any){
   return axios
     .post(`${URL}/nap/insert_country`, bodyAddatabase)
     .then((res)=>{
-      console.log(res);
+      //console.log(res);
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -178,7 +178,7 @@ function insert_city(req: any){
   return axios
     .post(`${URL}/nap/insert_city`, bodyAddatabase)
     .then((res)=>{
-      console.log(res);
+      //console.log(res);
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -194,7 +194,7 @@ function insert_port(req: any){
   return axios
     .post(`${URL}/nap/insert_port`, bodyAddatabase)
     .then((res)=>{
-      console.log(res);
+      //console.log(res);
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -210,7 +210,7 @@ function add_relation_table(req: any){
   return axios
     .post(`${URL}/nap/add_relation_table`, bodyAddatabase)
     .then((res)=>{
-      console.log(res);
+      //console.log(res);
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -226,7 +226,7 @@ function create_login(req: any){
   return axios
     .post(`${URL}/nap/create_login`, bodyAddatabase)
     .then((res)=>{
-      console.log(res);
+      //console.log(res);
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -244,7 +244,7 @@ function map_login_data(req: any){
   return axios
     .post(`${URL}/nap/map_login_data`, bodyAddatabase)
     .then((res)=>{
-      console.log(res);
+      //console.log(res);
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -264,7 +264,7 @@ function add_config_database(req: any){
   return axios
     .post(`${URL}/nap/add_config_database`, bodyAddatabase)
     .then((res)=>{
-      console.log(res);
+      //console.log(res);
       return res.data;
     })
     .catch((err) => console.log(err));

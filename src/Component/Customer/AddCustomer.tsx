@@ -68,8 +68,6 @@ function AddCustomer(props: PropsAddCustomer) {
       return;
     } else {
       if (pass.trim() === passComfirm.trim()) {
-        //console.log(loading.visible);
-        
         props.AddNewCustomer(
           nameCompany,
           parseInt(numberUser),

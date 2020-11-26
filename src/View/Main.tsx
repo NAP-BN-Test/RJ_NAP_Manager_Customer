@@ -1,30 +1,33 @@
-import { Breadcrumb } from "antd";
+import { Breadcrumb, Pagination } from "antd";
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import CustomerList from "../Component/Customer/CustomerList";
 import { Action } from "../redux/actions/index.action";
 import { RootState } from "../redux/reducers/index.reducer";
 import {
   Customer,
   toggleChangeStatus,
-  toggleEditDateTime,
-  toggleEditNumberUser,
-  toggleDelete,
+  toggleDelete, toggleEditDateTime,
+  toggleEditNumberUser
 } from "../types";
-import CustomerList from "../Component/Customer/CustomerList";
-import { useHistory } from "react-router-dom";
+import './MainStyle.css'
 
 function Main() {
   const customers: Array<Customer> = useSelector(
     (state: RootState) => state.customer
   );
+  const countRecode = useSelector((state: RootState) => state.countRecod);
+  
+  const [pageNumber, setPageNumber] = useState(1);
+  
   const dispatch = useDispatch();
-  const history =  useHistory();
-  useEffect(() => {
-    getlistcustomer();
-  }, []);
 
-  const getlistcustomer = async () => {
-    await dispatch(Action.act_get_list_customer())
+  useEffect(() => {
+    getlistcustomer(pageNumber);
+  }, [pageNumber]);
+
+  const getlistcustomer = async (pageNumber: number) => {
+    await dispatch(Action.act_get_list_customer(pageNumber))
   };
 
   const toggleChangeStatus: toggleChangeStatus = (CustomerID, Status) => {
@@ -61,7 +64,13 @@ function Main() {
     dispatch(Action.act_deleteDB(dbName, username, id));
   };
 
-  return (
+  function handlePage(page: number){
+    setPageNumber(page);
+  }
+
+  
+
+  return (  
     <div className="site-layout-content">
       <Breadcrumb style={{ margin: "16px 0px" }}>
         <Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -74,6 +83,8 @@ function Main() {
         toggleEditNumberUser={toggleEditNumberUser}
         toggleDelete={toggleDelete}
       />
+      
+      <Pagination  total={countRecode.count} onChange={handlePage}/>
     </div>
   );
 }

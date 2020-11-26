@@ -16,15 +16,14 @@ import './Customer.css';
 interface PropsCustomerItem {
   customers: Customer;
   toggleChangeStatus: toggleChangeStatus;
-  // visible: boolean
+  // visible: boolean,
   toggleEditNumberUser: toggleEditNumberUser,
   toggleEditDateTime: toggleEditDateTime;
-  toggleDelete: toggleDelete
+  toggleDelete: toggleDelete,
 }
 
 function CustomerItem(props: PropsCustomerItem) {
   
-
   const [visible, setVisible] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
@@ -33,6 +32,13 @@ function CustomerItem(props: PropsCustomerItem) {
   const [dateValue, setDateValue] = useState('');
   const [numberUser, setNumberUser] = useState('');
   const [deleteValue, setDeLeteValue] = useState("");
+
+  //Bắt đầu Sự kiên status
+  function onClickStatus(){
+    setVisible(false);
+    props.toggleChangeStatus(props.customers.Id, props.customers.Status)
+  }
+  //Kết thúc sự kiện status
 
   //Bắt đầu Sự kiên date
   function onChangeDate(e: any){
@@ -131,8 +137,8 @@ function CustomerItem(props: PropsCustomerItem) {
         width={200}
       >
         <p
-          onClick={() =>
-            props.toggleChangeStatus(props.customers.Id, props.customers.Status)
+          onClick={() =>onClickStatus()
+            
           }
           style={{ cursor: "pointer" }}
         >
@@ -190,7 +196,7 @@ function CustomerItem(props: PropsCustomerItem) {
 
 
       <Modal
-        title={"Xóa"+ " "+props.customers.DatabaseName}
+        title={"Xóa"+" "+props.customers.DatabaseName}
         centered
         visible={visible3}
         onOk={() => okDelete()}
@@ -199,7 +205,6 @@ function CustomerItem(props: PropsCustomerItem) {
       >
         <Input placeholder="Nhập đúng tên DB"  onChange={onChangeDelete}/> 
       </Modal>
-      
     </>
     
   );

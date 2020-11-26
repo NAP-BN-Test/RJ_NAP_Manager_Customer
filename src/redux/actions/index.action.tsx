@@ -1,8 +1,7 @@
 import { genKey } from "../../assets/utils";
-import * as constants from "../constanst/index";
-import history from "../../assets/utils/history";
-import { Customer } from "../../types/index";
 import { Services } from "../../services";
+import { Customer } from "../../types/index";
+import * as constants from "../constanst/index";
 
 export interface Get_List_Customer {
   type: constants.GET_LIST_CUSTOMER;
@@ -19,23 +18,48 @@ function func_get_list_customer(customer: any) {
   };
 }
 
-function func_edit_status(status: number) {
+function act_get_countArray(count: number){
+  return {
+    type: constants.GET_COUNT_ARRAY,
+    count: count,
+  };
+}
+
+function func_edit_status(CustomerID: number, status: boolean) {
   return {
     type: constants.EDIT_STATUS,
-    status: status,
+    Status: status,
+    CustomerID: CustomerID,
   };
 }
 
-function func_edit_date(dateExprired: string) {
+function func_edit_date(CustomerID: number, DateExprired: string) {
   return {
     type: constants.EDIT_DATE,
-    dateExprired: dateExprired,
+    CustomerID: CustomerID,
+    DateExprired: DateExprired
   };
 }
 
-function func_edit_user() {
+function func_edit_user(CustomerID: number, noAccount: number) {
   return {
     type: constants.EDIT_NUMBERUSE,
+    CustomerID: CustomerID,
+    noAccount: noAccount,
+  };
+}
+
+function func_delete_db(id: number){
+  return {
+    type: constants.DELETE_CUSTOMER,
+    id: id,
+  };
+}
+
+function func_addDB(status: number){
+  return {
+    type: constants.ADD_CUSTOMER,
+    status: status,
   };
 }
 
@@ -67,37 +91,40 @@ function act_hide_loading() {
 }
 
 //action xử lý
-function act_get_list_customer() {
+function act_get_list_customer(pageNumber: number) {
   return (dispatch: any) => {
-    let body = {
-      searchKey: "",
-      page: 1,
-    };
-
-    Services.get_list_customer(body).then((res: any) => {
-      if (res.status === 1) {
-        //console.log(res);
-        let customers = res.array;
-        dispatch(func_get_list_customer(customers));
-      } else {
-        dispatch(act_alert_error("Lấy dữ liệu thất bại!"));
-      }
-    });
-  };
+     
+      let body = {
+        searchKey: "",
+        page: pageNumber,
+      };
+      
+        Services.get_list_customer(body).then((res: any) => {
+          if (res.status === 1) {
+            let count = res.total;
+            // console.log(res);
+            let customers = res.array;
+            dispatch(act_get_countArray(count));
+            dispatch(func_get_list_customer(customers));
+          } else {
+            dispatch(act_alert_error("Lấy dữ liệu thất bại!"));
+          }
+        });
+      
+      
+    }
+      
 }
 
 function act_change_status(CustomerID: number, Status: boolean) {
-  //console.log("act_change_status:" + CustomerID);
-
   return (dispatch: any) => {
     let body = {
       customerID: CustomerID,
-      status: Status ? 0 : 1,
+      status: Status ? false : true,
     };
     Services.change_status(body).then((res: any) => {
       if (res.status === 1) {
-        dispatch(func_edit_status(res.status));
-        window.location.reload();
+        dispatch(func_edit_status(CustomerID, body.status));
       } else {
         dispatch(act_alert_error("Thay đổi trạng thái không thành công!"));
       }
@@ -113,11 +140,9 @@ function act_change_date(CustomerID: number, DateExprired: string) {
     };
     Services.change_date(body).then((res: any) => {
       if (res.status === 1) {
-        console.log(res);
-        dispatch(func_edit_date(res.status));
-        window.location.reload();
+        dispatch(func_edit_date(CustomerID, DateExprired));
       } else {
-        dispatch(func_edit_date("Thay đổi ngày hết hạn không thành công!"));
+        // dispatch(func_edit_date(2));
       }
     });
   };
@@ -141,11 +166,9 @@ function act_change_NumberUser(
 
     Services.change_numberUser(body).then((res: any) => {
       if (res.status === 1) {
-        console.log(res.status);
-        //dispatch(func_edit_user(res.status));
-        window.location.reload();
+        dispatch(func_edit_user(customerID, numberUser));
       } else {
-        console.log("Sửa số lượng user không thành công");
+        // dispatch(func_edit_user());
       }
     });
   };
@@ -161,7 +184,7 @@ function act_deleteDB(dbName: string, username: string, id: number) {
 
     Services.deleteDB(body).then((res: any) => {
       if (res.status === 1) {
-        window.location.reload();
+        dispatch(func_delete_db( id));
       } else {
         console.log("Xóa database không thành công");
       }
@@ -202,29 +225,35 @@ function act_accCustomerDB(
       customerName: customerName,
       numberUser: numberUser,
     };
+
     //console.log(bodyConfig);
     dispatch(act_show_loading("Đang tạo tên Database ..."));
     Services.create_database(bodyAddatabase).then((createDB: any) => {
       dispatch(act_hide_loading());
       if (createDB.status === 1) {
+  
         dispatch(act_show_loading("Đang tạo bảng ..."));
         Services.create_table(bodyAddatabase).then((createTB: any) => {
           dispatch(act_hide_loading());
           if (createTB.status === 1) {
+      
             dispatch(act_show_loading("Đang thêm database vào bảng ..."));
             Services.add_databse_table(bodyAddatabase).then((addDB: any) => {
               dispatch(act_hide_loading());
               if (addDB.status === 1) {
+          
                 dispatch(act_show_loading("Đang thêm nước vào bảng ..."));
                 Services.insert_country(bodyAddatabase).then(
                   (addCountry: any) => {
                     dispatch(act_hide_loading());
                     if (addCountry.status === 1) {
+                
                       dispatch(act_show_loading("Đang thêm city vào bảng ..."));
                       Services.insert_city(bodyAddatabase).then(
                         (addCity: any) => {
                           dispatch(act_hide_loading());
                           if (addCity.status === 1) {
+                      
                             dispatch(
                               act_show_loading("Đang thêm port vào bảng ...")
                             );
@@ -242,6 +271,7 @@ function act_accCustomerDB(
                                   ).then((addRelationTB: any) => {
                                     dispatch(act_hide_loading());
                                     if (addRelationTB.status === 1) {
+                                
                                       dispatch(
                                         act_show_loading("Đang tạo user ...")
                                       );
@@ -250,6 +280,7 @@ function act_accCustomerDB(
                                       ).then((createLogin: any) => {
                                         dispatch(act_hide_loading());
                                         if (createLogin.status === 1) {
+                                    
                                           dispatch(
                                             act_show_loading(
                                               "Đang nối user vào database..."
@@ -260,6 +291,7 @@ function act_accCustomerDB(
                                           ).then((mapLoginDB: any) => {
                                             dispatch(act_hide_loading());
                                             if (mapLoginDB.status === 1) {
+                                        
                                               dispatch(
                                                 act_show_loading(
                                                   "Thêm khách hàng vào danh sách..."
@@ -271,14 +303,15 @@ function act_accCustomerDB(
                                                   if (
                                                     addCustomer.status === 1
                                                   ) {
+                                              
                                                     Services.add_config_database(
                                                       bodyConfig
                                                     ).then((addConfig: any) => {
                                                       if (
                                                         addConfig.status === 1
                                                       ) {
-                                                        history.push("/main")
-                                                        window.location.reload();
+                                                  
+                                                        dispatch(func_addDB(addConfig.status))
                                                       } else {
                                                         console.log(
                                                           "Thêm config không thành công"
@@ -352,4 +385,5 @@ export const Action = {
   act_change_NumberUser,
   act_deleteDB,
   act_accCustomerDB,
+
 };

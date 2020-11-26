@@ -10,6 +10,8 @@ export const ALERT_SUCCESS = 'ALERT_SUCCESS'
 export const ALERT_ERROR = 'ALERT_ERROR'
 export const SHOW_LOADING = 'SHOW_LOADING'
 export const HIDE_LOADING = 'HIDE_LOADING'
+export const GET_COUNT_ARRAY= 'GET_COUNT_ARRAY'
+
 
 export type EDIT_NUMBERUSE = typeof EDIT_NUMBERUSE
 export type GET_LIST_CUSTOMER = typeof GET_LIST_CUSTOMER
@@ -21,3 +23,4 @@ export type ALERT_SUCCESS = typeof ALERT_SUCCESS
 export type ALERT_ERROR = typeof ALERT_ERROR
 export type SHOW_LOADING = typeof SHOW_LOADING
 export type HIDE_LOADING = typeof HIDE_LOADING
+export type GET_COUNT_ARRAY = typeof GET_COUNT_ARRAY
