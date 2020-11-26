@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import routes from "../../routes";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import "antd/dist/antd.css";
 import "../../index.css";

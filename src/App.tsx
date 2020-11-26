@@ -1,12 +1,11 @@
 import React, { Component, Suspense, useState } from "react";
 import { Route, Router, Switch } from "react-router-dom";
-import { createBrowserHistory } from "history";
 import "antd/dist/antd.css";
 import "./index.css";
 import TheLayout from "./Component/Container/TheLayout";
+import { history } from "./assets/utils/history";
 
 function App() {
-  const history = createBrowserHistory();
   return (
     <Router history={history}>
       <Switch>

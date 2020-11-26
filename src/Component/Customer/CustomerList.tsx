@@ -1,5 +1,12 @@
 import React from "react";
-import { Customer } from "../../types";
+import {
+  Customer,
+  ToggleChangeDate,
+  ToggleChangeNoAccount,
+  ToggleChangeStatus,
+  ToggleDelete,
+  ToggleVisiable,
+} from "../../types";
 import CustomerItem from "./CustomerItem";
 
 interface PropsCustomerList {
@@ -9,16 +16,11 @@ interface PropsCustomerList {
 function CustomerList(props: PropsCustomerList) {
   return (
     <div>
-      {props.customers.map((customer) => {
+      {props.customers.map((customer, idx) => {
         return (
           <CustomerItem
-            CompanyName={customer.CompanyName}
-            DatabaseName={customer.DatabaseName}
-            Status={customer.Status}
-            Username={customer.Username}
-            NoAccount={customer.NoAccount}
-            DateEpired={customer.DateEpired}
-            NoDayUpdate={customer.NoDayUpdate}
+            key={idx}
+            customers={customer}
           />
         );
       })}
