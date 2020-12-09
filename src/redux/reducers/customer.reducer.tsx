@@ -27,8 +27,6 @@ const initState = {
 const rdc_customer = (state = initState, action: any) => {
   switch (action.type) {
     case GET_LIST_CUSTOMER:
-      console.log(action.customers);
-
       return {
         total: action.totals,
         customers: action.customers.map((customer: any) => {

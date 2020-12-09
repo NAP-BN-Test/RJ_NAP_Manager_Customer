@@ -11,7 +11,7 @@ function TheLayout() {
     </div>
   );
   return (
-    <Layout className="layout">
+    <Layout>
       <TheHeader />
       <TheContent loading={loading} />
       <TheFooter />

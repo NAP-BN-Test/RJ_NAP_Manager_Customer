@@ -77,12 +77,10 @@ function act_hide_loading() {
 }
 
 // action xử lý
-function act_get_list_customer(pageNumber: number) {
-  console.log(pageNumber);
-
+function act_get_list_customer(searchKey: string, pageNumber: number) {
   return (dispatch: any) => {
     let body = {
-      searchKey: "",
+      searchKey: searchKey,
       page: pageNumber,
     };
     Services.get_list_customer(body).then(async (res) => {

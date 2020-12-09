@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
-import { Breadcrumb, notification, Pagination } from "antd";
+import React, { useEffect, useState } from "react";
+import { Breadcrumb, Pagination, Input } from "antd";
 import CustomerList from "../Component/Customer/CustomerList";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/reducers/index.reducer";
 import { Alert, Customer } from "../types";
 import { Action } from "../redux/actions/index.action";
+
+const { Search } = Input;
 
 function Main() {
   const customers: Array<Customer> = useSelector(
@@ -13,30 +15,23 @@ function Main() {
   const total = useSelector((state: RootState) => state.customer.total);
   const alert: Alert = useSelector((state: RootState) => state.alert);
   const dispatch = useDispatch();
+  const [searchKey, setSearchKey] = useState("")
 
   useEffect(() => {
-    getlistcustomer(1);
+    getlistcustomer("", 1);
   }, []);
 
-  useEffect(() => {
-    func_alert(alert);
-  }, [alert.message || alert.type]);
-
-  async function getlistcustomer(value: number) {
-    await dispatch(Action.act_get_list_customer(value));
+  function getlistcustomer(searchKey: string, value: number) {
+    dispatch(Action.act_get_list_customer(searchKey, value));
   }
 
-  function func_alert(alerts: Alert) {
-    if (alerts.type === "success" || alerts.type === "error") {
-      notification[alerts.type]({
-        message: alerts.type.toUpperCase(),
-        description: alerts.message,
-      });
-    }
+  function handlePagination(value: any) {
+    dispatch(Action.act_get_list_customer(searchKey, value));
   }
 
-  async function handlePagination(value: any) {
-    dispatch(Action.act_get_list_customer(value));
+  function getlistcustomerSearch(searchKey: string,) {
+    setSearchKey(searchKey)
+    dispatch(Action.act_get_list_customer(searchKey, 1));
   }
 
   return (
@@ -45,10 +40,16 @@ function Main() {
         <Breadcrumb.Item>Home</Breadcrumb.Item>
         <Breadcrumb.Item>Main</Breadcrumb.Item>
       </Breadcrumb>
+      <div className="input-search">
+        <Search placeholder="input keyword" allowClear enterButton="search" onSearch={getlistcustomerSearch}/>
+      </div>
       <div className="site-form-content">
         <CustomerList customers={customers} />
+      </div>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}
+      >
         <Pagination
-          style={{ marginTop: "10px" }}
           defaultPageSize={10}
           total={total}
           onChange={handlePagination}

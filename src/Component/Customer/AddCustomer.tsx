@@ -107,11 +107,13 @@ function AddCustomer(props: PropsAddCustomer) {
         >
           <Input type="password" placeholder="Nhập lại mật khẩu" />
         </Form.Item>
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </div>
       </Form>
     </Spin>
   );

@@ -18,6 +18,12 @@ code {
   background: #fff;
 }
 
+.site-layout-content .input-search {
+  padding-left: 50px;
+  padding-right: 50px;
+  height: "50%";
+}
+
 .site-form-content {
   padding-left: 50px;
   padding-right: 50px;
