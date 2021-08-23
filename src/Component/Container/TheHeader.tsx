@@ -30,7 +30,7 @@ function TheHeader() {
   const [visible, setvisible] = useState(false);
   const [visible1, setvisible1] = useState(false);
   const menu = (
-    <Menu onClick={()=>handleClick(0)}>
+    <Menu onClick={()=>handleClick(0)} style={{top: '22px', left: '-20px'}}>
       <Menu.Item key="1">
         <Link style={{ fontWeight: "bold" }} to="/listcustomerExpired3weeksbefore1">
           {"KH sắp hết hạn (trước 3 tuần)".toUpperCase()}
@@ -45,7 +45,7 @@ function TheHeader() {
   );
 
   const menu2 = (
-    <Menu onClick={()=>handleClick(1)}>
+    <Menu onClick={()=>handleClick(1)} style={{top: '22px', left: '-20px'}}>
       <Menu.Item key="1">
         <Link style={{ fontWeight: "bold" }} to="/listcustomerExpired3weeksbefore2">
           {"KH sắp hết hạn (trước 3 tuần)".toUpperCase()}
@@ -71,13 +71,14 @@ function TheHeader() {
           src="https://namanphu.vn/wp-content/uploads/2020/09/LOGO-TIM3.png"
           height="100%"
         />
-        <Menu.Item key={0}>
+        <Menu.Item key={0} >
           <Dropdown
             overlay={menu}
             onVisibleChange={() => setvisible(!visible)}
             visible={visible}
-            placement="bottomCenter"
-            arrow
+            placement="bottomLeft"
+            className="menu1"
+            // overlayStyle={{top: '70.9915px', left: '369.991px'}}
           >
             <a
               className="ant-dropdown-link"
@@ -98,8 +99,7 @@ function TheHeader() {
             overlay={menu2}
             onVisibleChange={() => setvisible1(!visible1)}
             visible={visible1}
-            placement="bottomCenter"
-            arrow
+            placement="bottomLeft"
           >
             <a
               className="ant-dropdown-link"
