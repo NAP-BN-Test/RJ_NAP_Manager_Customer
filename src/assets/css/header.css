@@ -7,10 +7,10 @@
 } */
 
 .ant-layout-header {
-    height: 100px;
+    height: 60px;
     padding: 0 50px;
     color: rgba(0, 0, 0, 0.85);
-    line-height: 100px;
+    line-height: 60px;
     background: #ffffff;
 }
 
@@ -37,4 +37,8 @@
 }
 .ant-menu-dark .ant-menu-item-selected > a, .ant-menu-dark .ant-menu-item-selected > span > a, .ant-menu-dark .ant-menu-item-selected > a:hover, .ant-menu-dark .ant-menu-item-selected > span > a:hover{
     color:#ffffff;
+}
+
+.ant-dropdown-menu-item > a:hover, .ant-dropdown-menu-submenu-title > a:hover {
+    color: #1890ff;
 }

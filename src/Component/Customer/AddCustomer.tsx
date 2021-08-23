@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Input, Select, Spin } from "antd";
+import { Button, Form, Input, InputNumber, Select, Spin } from "antd";
 import { FormInstance } from "antd/lib/form";
 import { ToggleAddCustomer } from "../../types";
 import { RootState } from "../../redux/reducers/index.reducer";
@@ -42,12 +42,100 @@ function AddCustomer(props: PropsAddCustomer) {
           )
         }
       >
+        <Form.Item name="customerName" label="Tên" rules={[{ required: true }]}>
+          <Input placeholder="Nhập tên" />
+        </Form.Item>
         <Form.Item
           name="customerName"
-          label="Tên khách hàng hoặc công ty"
+          label="Địa chỉ"
           rules={[{ required: true }]}
         >
-          <Input placeholder="Nhập tên khách hàng, công ty" />
+          <Input placeholder="Nhập địa chỉ" />
+        </Form.Item>
+        <Form.Item name="customerName" label="MST" rules={[{ required: true }]}>
+          <Input placeholder="Nhập MST" />
+        </Form.Item>
+        <Form.Item
+          name="customerName"
+          label="Đại điện"
+          rules={[{ required: true }]}
+        >
+          <Input placeholder="Nhập Đại điện" />
+        </Form.Item>
+        <Form.Item
+          name="customerName"
+          label="Số điện thoại"
+          rules={[{ required: true }]}
+        >
+          <Input placeholder="Nhập Số điện thoại" />
+        </Form.Item>
+        <Form.Item
+          name="customerName"
+          label="Email"
+          rules={[{ required: true }]}
+        >
+          <Input placeholder="Nhập Email" />
+        </Form.Item>
+        <Form.Item
+          name="duration"
+          label="Loại khách hàng"
+          rules={[{ required: true }]}
+        >
+          <Select
+            placeholder="Chọn loại khách hàng"
+            // onChange={onGenderChange}
+            allowClear
+          >
+            <Option value="7">Thuê bao</Option>
+            <Option value="30">Trả trọn gói</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name="customerName"
+          label="Tổng tiền"
+          rules={[{ required: true }]}
+        >
+          <InputNumber
+            // defaultValue={1000}
+            style={{ width: '100%' }}
+            formatter={(value) =>
+              `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }
+            // parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            // onChange={onChange}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="customerName"
+          label="Đã thanh toán"
+          rules={[{ required: true }]}
+        >
+          <InputNumber
+            // defaultValue={1000}
+            style={{ width: '100%' }}
+            formatter={(value) =>
+              `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }
+            // parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            // onChange={onChange}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="customerName"
+          label="Còn nợ"
+          rules={[{ required: true }]}
+        >
+          <InputNumber
+            // defaultValue={1000}
+            style={{ width: '100%' }}
+            formatter={(value) =>
+              `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }
+            // parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            // onChange={onChange}
+          />
         </Form.Item>
         <Form.Item
           name="noAccount"
@@ -79,34 +167,7 @@ function AddCustomer(props: PropsAddCustomer) {
             <Option value="9999">Vĩnh viễn</Option>
           </Select>
         </Form.Item>
-        <Form.Item
-          name="dbName"
-          label="Tên Database"
-          rules={[{ required: true }]}
-        >
-          <Input placeholder="Nhập tên Database" />
-        </Form.Item>
-        <Form.Item
-          name="username"
-          label="Tên đăng nhập"
-          rules={[{ required: true }]}
-        >
-          <Input placeholder="Nhập tên đăng nhập vào DB" />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          label="Mật khẩu"
-          rules={[{ required: true }]}
-        >
-          <Input type="password" placeholder="Nhập mật khẩu" />
-        </Form.Item>
-        <Form.Item
-          name="rePassword"
-          label="Nhập lại mật khẩu"
-          rules={[{ required: true }]}
-        >
-          <Input type="password" placeholder="Nhập lại mật khẩu" />
-        </Form.Item>
+
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Form.Item>
             <Button type="primary" htmlType="submit">

@@ -19,10 +19,10 @@ function Customer() {
   }
   return (
     <div className="site-layout-content">
-      <Breadcrumb style={{ margin: "16px 0" }}>
+      {/* <Breadcrumb style={{ margin: "16px 0" }}>
         <Breadcrumb.Item>Home</Breadcrumb.Item>
         <Breadcrumb.Item>Add Customer</Breadcrumb.Item>
-      </Breadcrumb>
+      </Breadcrumb> */}
       <div className="site-form-content">
         <AddCustomer toggleAddCustomer={toggleAddCustomer} />
       </div>
