@@ -16,6 +16,21 @@ function get_list_customer(req: any) {
     })
     .catch((err) => console.log(err));
 }
+function get_list_customer_v2(req: any) {
+  let body = {
+    secretKey: secretKey,
+    searchKey: req.searchKey,
+    page: req.page,
+  };
+  return axios
+    .post(`${URL}/nap/get_list_customer_v2`, body)
+    .then((res) => {
+      console.log(res);
+
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
 
 function change_status(req: any) {
   let body = {
@@ -30,7 +45,19 @@ function change_status(req: any) {
     })
     .catch((err) => console.log(err));
 }
-
+function change_status_v2(req: any) {
+  let body = {
+    secretKey: secretKey,
+    status: req.status,
+    customerID: req.customerID,
+  };
+  return axios
+    .post(`${URL}/nap/change_status_v2`, body)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
 function change_date(req: any) {
   let body = {
     secretKey: secretKey,
@@ -39,6 +66,19 @@ function change_date(req: any) {
   };
   return axios
     .post(`${URL}/nap/change_expire_date`, body)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+function change_date_v2(req: any) {
+  let body = {
+    secretKey: secretKey,
+    expireDate: req.date,
+    customerID: req.customerID,
+  };
+  return axios
+    .post(`${URL}/nap/change_expire_date_v2`, body)
     .then((res) => {
       return res.data;
     })
@@ -62,6 +102,23 @@ function change_numberUser(req: any) {
     })
     .catch((err) => console.log(err));
 }
+function change_numberUser_v2(req: any) {
+  let body = {
+    secretKey: secretKey,
+    customerID: req.customerID,
+    dbName: req.dbName,
+    username: req.username,
+    numberUser: req.numberUser,
+    customerName: req.customerName,
+  };
+  return axios
+    .post(`${URL}/nap/change_number_user_v2`, body)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
 
 function deleteDB(req: any) {
   let body = {
@@ -73,6 +130,22 @@ function deleteDB(req: any) {
 
   return axios
     .post(`${URL}/nap/delete_db`, body)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+function deleteDB_v2(req: any) {
+  let body = {
+    secretKey: secretKey,
+    dbName: req.dbName,
+    username: req.username,
+    id: req.id,
+  };
+
+  return axios
+    .post(`${URL}/nap/delete_db_v2`, body)
     .then((res) => {
       console.log(res);
       return res.data;
@@ -100,6 +173,26 @@ function addCustomer(req: any) {
     })
     .catch((err) => console.log(err));
 }
+function addCustomer_v2(req: any) {
+  let body = {
+    secretKey: secretKey,
+    duration: req.duration,
+    customerName: req.customerName,
+    dbName: req.dbName,
+    username: req.username,
+    password: req.password,
+    key: req.key,
+    numberUser: req.numberUser,
+  };
+
+  return axios
+    .post(`${URL}/nap/add_customer_v2`, body)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
 
 function create_database(req: any) {
   let bodyAddatabase = {
@@ -111,7 +204,23 @@ function create_database(req: any) {
   return axios
     .post(`${URL}/nap/create_db`, bodyAddatabase)
     .then((res) => {
-      console.log(res);
+      console.log(res.data);
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+
+function create_database_v2(req: any) {
+  let bodyAddatabase = {
+    dbName: req.dbName,
+    username: req.username,
+    password: req.password,
+    secretKey: secretKey,
+  };
+  return axios
+    .post(`${URL}/nap/create_db_v2`, bodyAddatabase)
+    .then((res) => {
+      console.log(res.data);
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -126,6 +235,38 @@ function create_table(req: any) {
   };
   return axios
     .post(`${URL}/nap/create_table`, bodyAddatabase)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+
+function create_table_v2(req: any) {
+  let bodyAddatabase = {
+    dbName: req.dbName,
+    username: req.username,
+    password: req.password,
+    secretKey: secretKey,
+  };
+  return axios
+    .post(`${URL}/nap/create_table_v2`, bodyAddatabase)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+
+function add_databse_table_v2(req: any) {
+  let bodyAddatabase = {
+    dbName: req.dbName,
+    username: req.username,
+    password: req.password,
+    secretKey: secretKey,
+  };
+  return axios
+    .post(`${URL}/nap/add_database_table_v2`, bodyAddatabase)
     .then((res) => {
       console.log(res);
       return res.data;
@@ -165,6 +306,22 @@ function insert_country(req: any) {
     .catch((err) => console.log(err));
 }
 
+function insert_country_v2(req: any) {
+  let bodyAddatabase = {
+    dbName: req.dbName,
+    username: req.username,
+    password: req.password,
+    secretKey: secretKey,
+  };
+  return axios
+    .post(`${URL}/nap/insert_country_v2`, bodyAddatabase)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+
 function insert_city(req: any) {
   let bodyAddatabase = {
     dbName: req.dbName,
@@ -174,6 +331,22 @@ function insert_city(req: any) {
   };
   return axios
     .post(`${URL}/nap/insert_city`, bodyAddatabase)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+
+function insert_city_v2(req: any) {
+  let bodyAddatabase = {
+    dbName: req.dbName,
+    username: req.username,
+    password: req.password,
+    secretKey: secretKey,
+  };
+  return axios
+    .post(`${URL}/nap/insert_city_v2`, bodyAddatabase)
     .then((res) => {
       console.log(res);
       return res.data;
@@ -197,6 +370,22 @@ function insert_port(req: any) {
     .catch((err) => console.log(err));
 }
 
+function insert_port_v2(req: any) {
+  let bodyAddatabase = {
+    dbName: req.dbName,
+    username: req.username,
+    password: req.password,
+    secretKey: secretKey,
+  };
+  return axios
+    .post(`${URL}/nap/insert_port_v2`, bodyAddatabase)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+
 function add_relation_table(req: any) {
   let bodyAddatabase = {
     dbName: req.dbName,
@@ -206,6 +395,22 @@ function add_relation_table(req: any) {
   };
   return axios
     .post(`${URL}/nap/add_relation_table`, bodyAddatabase)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+
+function add_relation_table_v2(req: any) {
+  let bodyAddatabase = {
+    dbName: req.dbName,
+    username: req.username,
+    password: req.password,
+    secretKey: secretKey,
+  };
+  return axios
+    .post(`${URL}/nap/add_relation_table_v2`, bodyAddatabase)
     .then((res) => {
       console.log(res);
       return res.data;
@@ -268,19 +473,32 @@ function add_config_database(req: any) {
 
 export const Services = {
   get_list_customer,
+  get_list_customer_v2,
   change_status,
+  change_status_v2,
   change_date,
+  change_date_v2,
   change_numberUser,
+  change_numberUser_v2,
   deleteDB,
+  deleteDB_v2,
   addCustomer,
+  addCustomer_v2,
   create_database,
+  create_database_v2,
   create_table,
+  create_table_v2,
   add_databse_table,
+  add_databse_table_v2,
   insert_city,
+  insert_city_v2,
   add_relation_table,
+  add_relation_table_v2,
   map_login_data,
   insert_country,
+  insert_country_v2,
   insert_port,
+  insert_port_v2,
   create_login,
   add_config_database,
 };

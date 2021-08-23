@@ -8,37 +8,39 @@ import { Action } from "../redux/actions/index.action";
 
 const { Search } = Input;
 
-function Main() {
+function Main2() {
   const customers: Array<Customer> = useSelector(
     (state: RootState) => state.customer.customers
   );
+  console.log(customers);
+  
   const total = useSelector((state: RootState) => state.customer.total);
   const alert: Alert = useSelector((state: RootState) => state.alert);
   const dispatch = useDispatch();
   const [searchKey, setSearchKey] = useState("")
 
   useEffect(() => {
-    getlistcustomer("", 1);
+    getlistcustomer2("", 1);
   }, []);
 
-  function getlistcustomer(searchKey: string, value: number) {
-    dispatch(Action.act_get_list_customer(searchKey, value));
+  function getlistcustomer2(searchKey: string, value: number) {
+    dispatch(Action.act_get_list_customer2(searchKey, value));
   }
 
   function handlePagination(value: any) {
-    dispatch(Action.act_get_list_customer(searchKey, value));
+    dispatch(Action.act_get_list_customer2(searchKey, value));
   }
 
   function getlistcustomerSearch(searchKey: string,) {
     setSearchKey(searchKey)
-    dispatch(Action.act_get_list_customer(searchKey, 1));
+    dispatch(Action.act_get_list_customer2(searchKey, 1));
   }
 
   return (
     <div className="site-layout-content">
       <Breadcrumb style={{ margin: "16px 0px" }}>
         <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item>Danh sách khách hàng V1</Breadcrumb.Item>
+        <Breadcrumb.Item>Danh sách khách hàng V2</Breadcrumb.Item>
       </Breadcrumb>
       <div className="input-search">
         <Search placeholder="input keyword" allowClear enterButton="search" onSearch={getlistcustomerSearch}/>
@@ -60,4 +62,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default Main2;
