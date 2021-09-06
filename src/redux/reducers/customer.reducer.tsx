@@ -5,10 +5,12 @@ import {
   EDIT_DATE,
   EDIT_NO_ACCOUNT,
   EDIT_STATUS,
+  GET_INFO_CUSTOMER,
   GET_LIST_CUSTOMER,
+  GET_LIST_CUSTOMER_REGISTER,
 } from "../constants";
 
-const initState = {
+const initState: any = {
   total: 0,
   customers: [
     {
@@ -19,7 +21,15 @@ const initState = {
       Username: "",
       NoAccount: 0,
       DateExpired: "",
-      NoDayUpdate: 0,
+      NoDayUpdate: "",
+      Address: "",
+      MaSoThue: "",
+      NguoiDaiDien: "",
+      PhoneNumber: "",
+      Email: "",
+      LoaiKhachHang: "",
+      Duration: 0,
+      LocyVersion: "",
     },
   ],
 };
@@ -42,12 +52,53 @@ const rdc_customer = (state = initState, action: any) => {
           };
         }),
       };
-
+    case GET_INFO_CUSTOMER:
+      return {
+        total: 0,
+        customers: [{
+          ID: action.customers.id,
+          CompanyName: action.customers.companyName,
+          CompanyCode: action.customers.companyCode,
+          MaSoThue: action.customers.masothue,
+          Address: action.customers.address,
+          NguoiDaiDien: action.customers.nguoidaidien,
+          PhoneNumber: action.customers.phonenumber,
+          Email: action.customers.email,
+          LoaiKhachHang: action.customers.loaikhachhang,
+          DateExpired: action.customers.expireDate,
+          Duration: action.customers.duration,
+          NoAccount: parseInt(action.customers.numberUser),
+          NoDayUpdate: action.customers.updatedTime,
+          LocyVersion: action.customers.locyversion,
+        }],
+      };
+    case GET_LIST_CUSTOMER_REGISTER:
+      return {
+        total: action.totals,
+        customers: action.customers.map((customer: any) => {
+          return {
+            ID: customer.id,
+            CompanyName: customer.name,
+            DatabaseName: customer.dbName,
+            DateExpired: customer.expireDate,
+            NoAccount: customer.numberUser,
+            NoDayUpdate: customer.updatedTime,
+            Status: customer.status,
+            Username: customer.username,
+            Address: customer.address,
+            MaSoThue: customer.masothue,
+            NguoiDaiDien: customer.nguoidaidien,
+            PhoneNumber: customer.phonenumber,
+            Email: customer.email,
+            LoaiKhachHang: customer.loaikhachhang,
+          };
+        }),
+      };
     case ADD_CUSTOMER:
       return state;
     case EDIT_STATUS:
       const indexStatus = state.customers.findIndex(
-        (cus) => cus.ID === action.customerId
+        (cus: any) => cus.ID === action.customerId
       );
       return update(state, {
         customers: {
@@ -60,7 +111,7 @@ const rdc_customer = (state = initState, action: any) => {
       });
     case EDIT_DATE:
       const indexDate = state.customers.findIndex(
-        (cus) => cus.ID === action.customerId
+        (cus: any) => cus.ID === action.customerId
       );
       return update(state, {
         customers: {
@@ -73,7 +124,7 @@ const rdc_customer = (state = initState, action: any) => {
       });
     case EDIT_NO_ACCOUNT:
       const indexNoAccount = state.customers.findIndex(
-        (cus) => cus.ID === action.customerId
+        (cus: any) => cus.ID === action.customerId
       );
       return update(state, {
         customers: {
@@ -86,11 +137,11 @@ const rdc_customer = (state = initState, action: any) => {
       });
     case DELETE_CUSTOMER:
       const indexDelete = state.customers.findIndex(
-        (cus) => cus.ID === action.customerId
+        (cus: any) => cus.ID === action.customerId
       );
       return update(state, {
         customers: {
-          $splice: [[indexDelete, 1]]
+          $splice: [[indexDelete, 1]],
         },
       });
     default:

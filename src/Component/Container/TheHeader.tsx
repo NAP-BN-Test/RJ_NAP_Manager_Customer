@@ -33,12 +33,12 @@ function TheHeader() {
     <Menu onClick={()=>handleClick(0)} style={{top: '22px', left: '-20px'}}>
       <Menu.Item key="1">
         <Link style={{ fontWeight: "bold" }} to="/listcustomerExpired3weeksbefore1">
-          {"KH sắp hết hạn (trước 3 tuần)".toUpperCase()}
+          {"Khách hàng sắp hết hạn (trước 3 tuần)".toUpperCase()}
         </Link>
       </Menu.Item>
       <Menu.Item key="2">
         <Link style={{ fontWeight: "bold" }} to="/ExpiredAndStop1">
-          {"KH hết hạn và dừng".toUpperCase()}
+          {"Khách hàng hết hạn và dừng".toUpperCase()}
         </Link>
       </Menu.Item>
     </Menu>
@@ -48,12 +48,12 @@ function TheHeader() {
     <Menu onClick={()=>handleClick(1)} style={{top: '22px', left: '-20px'}}>
       <Menu.Item key="1">
         <Link style={{ fontWeight: "bold" }} to="/listcustomerExpired3weeksbefore2">
-          {"KH sắp hết hạn (trước 3 tuần)".toUpperCase()}
+          {"Khách hàng sắp hết hạn (trước 3 tuần)".toUpperCase()}
         </Link>
       </Menu.Item>
       <Menu.Item key="2">
         <Link style={{ fontWeight: "bold" }} to="/ExpiredAndStop2">
-          {"KH hết hạn và dừng".toUpperCase()}
+          {"Khách hàng hết hạn và dừng".toUpperCase()}
         </Link>
       </Menu.Item>
     </Menu>

@@ -1,60 +1,58 @@
 import { Breadcrumb, Button, Table } from "antd";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { Action } from "../redux/actions/index.action";
+import { RootState } from "../redux/reducers/index.reducer";
+import { Customer } from "../types";
 
 function ListCustomer() {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      address: "10 Downing Street",
-      MST: "1",
-      Email: "1",
-      SDT: "0333968999",
-      daidien: "Dũng",
-      conno: "1000000",
-      dathanhtoan: "199900000",
-      tongtien: "2000000000",
-    },
-    {
-      key: "2",
-      name: "John",
-      address: "10 Downing Street",
-      MST: "1",
-      Email: "1",
-      SDT: "0333968999",
-      daidien: "Dũng",
-      conno: "1000000",
-      dathanhtoan: "199900000",
-      tongtien: "2000000000",
-    },
-  ];
+  let history = useHistory();
+
+  const customers: Array<Customer> = useSelector(
+    (state: RootState) => state.customer.customers
+  );
+  console.log(customers);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getlistcustomer();
+  }, []);
+
+  function getlistcustomer() {
+    dispatch(Action.act_get_list_customer_register(1));
+  }
+
+  function onUpdate(r: any) {
+    history.push("/detail_customer",
+      {id: r.ID});
+  }
 
   const columns = [
     {
-      title: "Tên",
-      dataIndex: "name",
-      key: "name",
+      title: "Tên Công Ty",
+      dataIndex: "CompanyName",
+      key: "CompanyName",
     },
     {
       title: "Địa chỉ",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "Address",
+      key: "Address",
     },
     {
       title: "MST",
-      dataIndex: "MST",
-      key: "MST",
+      dataIndex: "MaSoThue",
+      key: "MaSoThue",
     },
     {
       title: "Đại điện",
-      dataIndex: "daidien",
-      key: "daidien",
+      dataIndex: "NguoiDaiDien",
+      key: "NguoiDaiDien",
     },
     {
       title: "Số điện thoại",
-      dataIndex: "SDT",
-      key: "SDT",
+      dataIndex: "PhoneNumber",
+      key: "PhoneNumber",
     },
     {
       title: "Email",
@@ -63,35 +61,35 @@ function ListCustomer() {
     },
     {
       title: "Loại KH",
-      dataIndex: "LoaiKH",
-      key: "LoaiKH",
+      dataIndex: "LoaiKhachHang",
+      key: "LoaiKhachHang",
     },
-    {
-      title: "Tổng tiền",
-      dataIndex: "tongtien",
-      key: "tongtien",
-      render: (tongtien: any) => (
-        <>{tongtien?.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}</>
-      ),
-    },
-    {
-      title: "Đã thanh toán",
-      dataIndex: "dathanhtoan",
-      key: "dathanhtoan",
-      render: (dathanhtoan: any) => (
-        <>
-          {dathanhtoan?.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}
-        </>
-      ),
-    },
-    {
-      title: "Còn nợ",
-      dataIndex: "conno",
-      key: "conno",
-      render: (conno: any) => (
-        <>{conno?.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}</>
-      ),
-    },
+    // {
+    //   title: "Tổng tiền",
+    //   dataIndex: "tongtien",
+    //   key: "tongtien",
+    //   render: (tongtien: any) => (
+    //     <>{tongtien?.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}</>
+    //   ),
+    // },
+    // {
+    //   title: "Đã thanh toán",
+    //   dataIndex: "dathanhtoan",
+    //   key: "dathanhtoan",
+    //   render: (dathanhtoan: any) => (
+    //     <>
+    //       {dathanhtoan?.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}
+    //     </>
+    //   ),
+    // },
+    // {
+    //   title: "Còn nợ",
+    //   dataIndex: "conno",
+    //   key: "conno",
+    //   render: (conno: any) => (
+    //     <>{conno?.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}</>
+    //   ),
+    // },
   ];
 
   return (
@@ -101,12 +99,19 @@ function ListCustomer() {
         <Breadcrumb.Item>Danh sách khách hàng đăng ký</Breadcrumb.Item>
       </Breadcrumb>
       <Link style={{ fontWeight: "bold" }} to="/add_customer">
-        <Button style={{ float: "right", marginBottom: '10px' }} type="primary">
+        <Button style={{ float: "right", marginBottom: "10px" }} type="primary">
           Thêm mới
         </Button>
       </Link>
 
-      <Table dataSource={dataSource} columns={columns} />
+      <Table
+        onRow={(r) => ({
+          // onMouseEnter: () => updateEdit(r),
+          onDoubleClick: () => onUpdate(r),
+        })}
+        dataSource={customers}
+        columns={columns}
+      />
     </div>
   );
 }

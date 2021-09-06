@@ -1,10 +1,9 @@
 import React from "react";
-import { Breadcrumb } from "antd";
-import AddCustomer from "../Component/Customer/AddCustomer";
 import { useDispatch } from "react-redux";
 import { Action } from "../redux/actions/index.action";
+import EditCustomer from "../Component/Customer/EditCustomer";
 
-function Customer() {
+function InfoCustomer() {
   const dispatch = useDispatch();
 
   function toggleAddCustomer(
@@ -43,10 +42,10 @@ function Customer() {
         <Breadcrumb.Item>Add Customer</Breadcrumb.Item>
       </Breadcrumb> */}
       <div className="site-form-content">
-        <AddCustomer toggleAddCustomer={toggleAddCustomer} />
+        <EditCustomer toggleAddCustomer={toggleAddCustomer} />
       </div>
     </div>
   );
 }
 
-export default Customer;
+export default InfoCustomer;

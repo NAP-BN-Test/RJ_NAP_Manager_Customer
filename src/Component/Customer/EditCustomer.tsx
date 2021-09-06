@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Input, InputNumber, Radio, Select, Spin } from "antd";
 import { FormInstance } from "antd/lib/form";
-import { ToggleAddCustomer } from "../../types";
+import { Customer, objectID, ToggleAddCustomer } from "../../types";
 import { RootState } from "../../redux/reducers/index.reducer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { Action } from "../../redux/actions/index.action";
 
 const layout = {
   labelCol: { span: 16 },
@@ -19,12 +21,28 @@ interface PropsAddCustomer {
   toggleAddCustomer: ToggleAddCustomer;
 }
 
-function AddCustomer(props: PropsAddCustomer) {
+function EditCustomer(props: PropsAddCustomer) {
   const formRef = React.createRef<FormInstance>();
+
+  const dispatch = useDispatch();
+  const location = useLocation();
+
   const loading = useSelector((state: RootState) => state.loading);
+  const customers: Customer = useSelector(
+    (state: RootState) => state.customer.customers[0]
+  );
+  console.log(customers);
+  console.log(customers.Duration);
+
+  useEffect(() => {
+    let objectID: any = location.state;
+    console.log(objectID.id);
+    dispatch(Action.act_get_info_customers(objectID.id));
+  }, [location]);
 
   return (
     <Spin tip={loading.message} spinning={loading.visible}>
+      {customers.LocyVersion}
       <Form
         className="site-form-content"
         {...layout}
@@ -43,11 +61,21 @@ function AddCustomer(props: PropsAddCustomer) {
             value.loaikhachhang,
             value.duration,
             value.noAccount,
-            value.locyversion,
+            value.locyversion
           )
         }
         initialValues={{
-          "locyversion": 1,
+          customerName: customers.CompanyName,
+          customerCode: customers.CompanyCode,
+          masothue: customers.MaSoThue,
+          address: customers.Address,
+          nguoidaidien: customers.DaiDien,
+          phonenumber: customers.PhoneNumber,
+          email: customers.Email,
+          loaikhachhang: customers.LoaiKhachHang,
+          duration: customers.Duration,
+          noAccount: customers.NoAccount,
+          locyversion: customers.LocyVersion,
         }}
       >
         <Form.Item
@@ -112,19 +140,19 @@ function AddCustomer(props: PropsAddCustomer) {
             // onChange={onGenderChange}
             allowClear
           >
-            <Option value="7">1 Tuần</Option>
-            <Option value="30">1 Tháng</Option>
-            <Option value="90">3 Tháng</Option>
-            <Option value="180">6 Tháng</Option>
-            <Option value="365">1 Năm</Option>
-            <Option value="9999">Vĩnh viễn</Option>
+            <Option value={7}>1 Tuần</Option>
+            <Option value={30}>1 Tháng</Option>
+            <Option value={90}>3 Tháng</Option>
+            <Option value={180}>6 Tháng</Option>
+            <Option value={365}>1 Năm</Option>
+            <Option value={9999}>Vĩnh viễn</Option>
           </Select>
         </Form.Item>
         <Form.Item
           name="noAccount"
           label="Số lượng user"
           rules={[{ required: true }]}
-          initialValue={5}
+        //   initialValue={5}
         >
           <Input
             type="number"
@@ -132,7 +160,7 @@ function AddCustomer(props: PropsAddCustomer) {
             placeholder="Chọn số lượng user được sử dụng"
           />
         </Form.Item>
-        {/* <Form.Item
+        <Form.Item
           name="moneyvalue"
           label="Tổng tiền"
           // rules={[{ required: true }]}
@@ -178,7 +206,7 @@ function AddCustomer(props: PropsAddCustomer) {
             // parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
             // onChange={onChange}
           />
-        </Form.Item> */}
+        </Form.Item>
         <Form.Item
           name="locyversion"
           label="Chọn phiên bản"
@@ -211,4 +239,4 @@ function AddCustomer(props: PropsAddCustomer) {
     </Spin>
   );
 }
-export default AddCustomer;
+export default EditCustomer;

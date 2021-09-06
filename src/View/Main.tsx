@@ -9,7 +9,7 @@ import { Action } from "../redux/actions/index.action";
 const { Search } = Input;
 
 function Main() {
-  const customers: Array<Customer> = useSelector(
+  const customers: any = useSelector(
     (state: RootState) => state.customer.customers
   );
   const total = useSelector((state: RootState) => state.customer.total);

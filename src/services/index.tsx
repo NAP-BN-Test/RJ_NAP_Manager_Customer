@@ -31,6 +31,20 @@ function get_list_customer_v2(req: any) {
     })
     .catch((err) => console.log(err));
 }
+function get_list_customer_register(req: any) {
+  let body = {
+    secretKey: secretKey,
+    page: req.page,
+  };
+  return axios
+    .post(`${URL}/nap/get_list_customer_register`, body)
+    .then((res) => {
+      console.log(res);
+
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
 
 function change_status(req: any) {
   let body = {
@@ -153,16 +167,40 @@ function deleteDB_v2(req: any) {
     .catch((err) => console.log(err));
 }
 
+function infoCustomer(req: any) {
+  let body = {
+    secretKey: secretKey,
+    id: req.id
+  };
+
+  return axios
+    .post(`${URL}/nap/info_customer`, body)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+
 function addCustomer(req: any) {
   let body = {
     secretKey: secretKey,
     duration: req.duration,
     customerName: req.customerName,
+    customerCode: req.customerCode,
     dbName: req.dbName,
     username: req.username,
     password: req.password,
     key: req.key,
     numberUser: req.numberUser,
+    masothue: req.masothue,
+    address: req.address,
+    nguoidaidien: req.nguoidaidien,
+    phonenumber: req.phonenumber,
+    email: req.email,
+    loaikhachhang: req.loaikhachhang,
+    noAccount: req.noAccount,
+    version: req.locyversion,
   };
 
   return axios
@@ -474,6 +512,7 @@ function add_config_database(req: any) {
 export const Services = {
   get_list_customer,
   get_list_customer_v2,
+  get_list_customer_register,
   change_status,
   change_status_v2,
   change_date,
@@ -482,6 +521,7 @@ export const Services = {
   change_numberUser_v2,
   deleteDB,
   deleteDB_v2,
+  infoCustomer,
   addCustomer,
   addCustomer_v2,
   create_database,

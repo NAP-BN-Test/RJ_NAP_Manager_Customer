@@ -12,9 +12,22 @@ export interface Get_List_Customer {
 export type AUTHENTICATE = Get_List_Customer;
 
 // function gọi đến reducer
+function func_get_info_customer(customer: any) {
+  return {
+    type: constants.GET_INFO_CUSTOMER,
+    customers: customer,
+  };
+}
 function func_get_list_customer(customer: any, total: number) {
   return {
     type: constants.GET_LIST_CUSTOMER,
+    customers: customer,
+    totals: total,
+  };
+}
+function func_get_list_customer_register(customer: any, total: number) {
+  return {
+    type: constants.GET_LIST_CUSTOMER_REGISTER,
     customers: customer,
     totals: total,
   };
@@ -113,6 +126,25 @@ function act_get_list_customer2(searchKey: string, pageNumber: number) {
     });
   };
 }
+function act_get_list_customer_register(pageNumber: number) {
+  let body = {
+    page: pageNumber,
+  };
+  return (dispatch: any) => {
+    Services.get_list_customer_register(body).then(async (res) => {
+      if (res.status === 1) {
+        console.log(res);
+        
+        let customers = res.array;
+        let total = res.total;
+        dispatch(func_get_list_customer_register(customers, total));
+        // dispatch(act_alert_success("Lấy dữ liệu thành công!"));
+      } else {
+        dispatch(act_alert_error("Lấy dữ liệu thất bại!"));
+      }
+    });
+  };
+}
 
 function act_change_status(customerID: number, status: boolean) {
   console.log(status);
@@ -196,7 +228,82 @@ function act_deleteDB(dbName: string, username: string, id: number) {
     });
   };
 }
+function act_login(username: string, password: string) {
+  return(dispatch: any)=>{
+    localStorage.setItem("user", JSON.stringify({
+      userinfo: {
+        name: '',
+      },
+      accesstoken: '11111111',
+      permisson: '',
+    }))
+    
+  }
+}
 
+// lấy thông tin khách hàng
+function act_get_info_customers(id: number) {
+  return (dispatch: any) => {
+    let body = {
+      id: id,
+      key: genKey(),
+    };
+    Services.infoCustomer(body).then((infoCustomer: any) => {
+      console.log(infoCustomer);
+      if (infoCustomer.status === 1) {
+        dispatch(func_get_info_customer(infoCustomer.infoCustomer))
+      }else{
+        dispatch(act_alert_error("Thêm dữ liệu không thành công!"));
+      }
+    });
+  };
+}
+
+// nút save
+function act_add_customers(
+  customerName: string,
+  customerCode: string,
+  masothue: string,
+  address: string,
+  nguoidaidien: string,
+  phonenumber: string,
+  email: string,
+  loaikhachhang: string,
+  duration: string,
+  numberUser: number,
+  locyversion: number
+) {
+  return (dispatch: any) => {
+    let body = {
+      customerName: customerName,
+      customerCode: customerCode,
+      masothue: masothue,
+      address: address,
+      nguoidaidien: nguoidaidien,
+      phonenumber: phonenumber,
+      email: email,
+      loaikhachhang: loaikhachhang,
+      duration: duration,
+      numberUser: numberUser,
+      locyversion: locyversion,
+      key: genKey(),
+    };
+    dispatch(act_show_loading("Đang tạo tên Database ..."));
+    Services.addCustomer(body).then((addCustomer: any) => {
+      console.log(addCustomer);
+      
+      dispatch(act_hide_loading());
+      if (addCustomer.status === 1) {
+        // console.log("Thêm dữ liệu thành công");
+        dispatch(act_alert_success("Thêm dữ liệu thành công!"));
+      }else{
+        dispatch(act_alert_error("Thêm dữ liệu không thành công!"));
+      }
+    });
+  };
+}
+
+// nút submit
 function act_add_customersDB(
   customerName: string,
   dbName: string,
@@ -230,7 +337,7 @@ function act_add_customersDB(
       customerName: customerName,
       numberUser: numberUser,
     };
-    
+
     //console.log(bodyConfig);
     //   dispatch(act_show_loading("Đang tạo tên Database ..."));
     //   Services.create_database(bodyAddatabase).then((createDB: any) => {
@@ -447,7 +554,9 @@ function act_add_customersDB(
                                                     if (
                                                       addConfig.status === 1
                                                     ) {
-                                                      history.push("/listcustomerv1");
+                                                      history.push(
+                                                        "/listcustomerv1"
+                                                      );
                                                     } else {
                                                       console.log(
                                                         "Thêm config không thành công"
@@ -515,9 +624,13 @@ function act_add_customersDB(
 export const Action = {
   act_get_list_customer,
   act_get_list_customer2,
+  act_get_list_customer_register,
   act_change_status,
   act_change_date,
   act_change_noAccount,
   act_deleteDB,
+  act_get_info_customers,
   act_add_customersDB,
+  act_add_customers,
+  act_login
 };

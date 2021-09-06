@@ -3,6 +3,7 @@ import React from "react";
 const Main = React.lazy(() => import("./View/Main"));
 const Main2 = React.lazy(() => import("./View/Main2"));
 const Customer = React.lazy(() => import("./View/Customer"));
+const InfoCustomer = React.lazy(() => import("./View/InfoCustomer"));
 const ListCustomerRegister = React.lazy(() => import("./View/ListCustomer"));
 const ExpiredAndStop = React.lazy(() => import("./View/ExpiredAndStop"));
 const listcustomerExpired3weeksbefore = React.lazy(() => import("./View/Expired3weeksbefore"));
@@ -62,6 +63,14 @@ const routes = [
     exact: true,
     name: "Thêm mới khách hàng",
     component: Customer,
+  },
+
+  {
+    key: "2",
+    path: "/detail_customer",
+    exact: true,
+    name: "Thông tin khách hàng",
+    component: InfoCustomer,
   },
 
   {
