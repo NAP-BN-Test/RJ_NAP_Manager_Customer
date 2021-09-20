@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Action } from "../redux/actions/index.action";
 import { RootState } from "../redux/reducers/index.reducer";
-import { Customer } from "../types";
+import { Account, Customer } from "../types";
 
 function ListCustomer() {
   let history = useHistory();
-
+  const accounts: Account = useSelector((state: RootState) => state.account);
   const customers: Array<Customer> = useSelector(
     (state: RootState) => state.customer.customers
   );
@@ -24,8 +24,7 @@ function ListCustomer() {
   }
 
   function onUpdate(r: any) {
-    history.push("/detail_customer",
-      {id: r.ID});
+    history.push("/detail_customer", { id: r.ID });
   }
 
   const columns = [
@@ -98,11 +97,16 @@ function ListCustomer() {
         <Breadcrumb.Item>Home</Breadcrumb.Item>
         <Breadcrumb.Item>Danh sách khách hàng đăng ký</Breadcrumb.Item>
       </Breadcrumb>
-      <Link style={{ fontWeight: "bold" }} to="/add_customer">
-        <Button style={{ float: "right", marginBottom: "10px" }} type="primary">
-          Thêm mới
-        </Button>
-      </Link>
+      {accounts.permission != "KETOAN" ? (
+        <Link style={{ fontWeight: "bold" }} to="/add_customer">
+          <Button
+            style={{ float: "right", marginBottom: "10px" }}
+            type="primary"
+          >
+            Thêm mới
+          </Button>
+        </Link>
+      ) : null}
 
       <Table
         onRow={(r) => ({

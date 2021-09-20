@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input, Button, Checkbox, Row } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Action } from "../redux/actions/index.action";
+import { RootState } from "../redux/reducers/index.reducer";
+import { Account } from "../types";
+import { history } from "../assets/utils/history";
 function LoginScreen() {
   const dispatch = useDispatch();
+  const accounts: Account = useSelector((state: RootState) => state.account);
+  console.log(accounts.id);
+
+  useEffect(() => {
+    if (accounts.permission == "KETOAN") {
+      history.push("/listcustomerRegister");
+    } else if (accounts.id != null) {
+      history.push("/listcustomerv1");
+    }
+  }, [accounts.id != null]);
+
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
     dispatch(Action.act_login(values.username, values.password));
   };
   return (

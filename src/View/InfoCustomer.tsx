@@ -7,6 +7,7 @@ function InfoCustomer() {
   const dispatch = useDispatch();
 
   function toggleAddCustomer(
+    id: any,
     customerName: string,
     customerCode: string,
     masothue: string,
@@ -17,21 +18,22 @@ function InfoCustomer() {
     loaikhachhang: string,
     duration: string,
     numberUser: number,
-    locyversion: number
+    locyversion: number,
+    tongtien: number,
+    dathanhtoan: number
   ) {
     dispatch(
-      Action.act_add_customers(
+      Action.act_add_customersDB(
+        id,
         customerName,
         customerCode,
-        masothue,
-        address,
-        nguoidaidien,
-        phonenumber,
-        email,
-        loaikhachhang,
         duration,
         numberUser,
-        locyversion
+        customerCode,
+        phonenumber,
+        locyversion,
+        tongtien,
+        dathanhtoan
       )
     );
   }

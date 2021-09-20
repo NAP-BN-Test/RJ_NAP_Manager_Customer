@@ -33,6 +33,7 @@ function AddCustomer(props: PropsAddCustomer) {
         layout="vertical"
         onFinish={(value) =>
           props.toggleAddCustomer(
+            0,
             value.customerName,
             value.customerCode,
             value.masothue,
@@ -44,6 +45,8 @@ function AddCustomer(props: PropsAddCustomer) {
             value.duration,
             value.noAccount,
             value.locyversion,
+            0,
+            0
           )
         }
         initialValues={{

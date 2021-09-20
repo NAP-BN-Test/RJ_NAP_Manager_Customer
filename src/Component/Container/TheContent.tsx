@@ -27,7 +27,7 @@ function TheContent(props: PropsTheContent) {
               null
             );
           })}
-          <Redirect from="/" to="/listcustomerv1" />
+          <Redirect from="/" to="/login" />
         </Switch>
       </Suspense>
     </Content>

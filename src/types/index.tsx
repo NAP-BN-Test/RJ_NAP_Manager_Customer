@@ -5,7 +5,7 @@ export interface Customer {
   MaSoThue: string;
   Email: string;
   PhoneNumber: string;
-  DaiDien: string;
+  NguoiDaiDien: string;
   Address: string;
   Status: boolean;
   DatabaseName: string;
@@ -16,6 +16,9 @@ export interface Customer {
   LoaiKhachHang: string;
   Duration: number;
   LocyVersion: number;
+  TongTien: number;
+  DaThanhToan: number;
+  ConNo: number;
 }
 
 // export interface CustomerRegister {
@@ -35,10 +38,17 @@ export interface Alert {
 export interface objectID {
   id: number;
 }
+export interface Account {
+  id: number | null;
+  username: string | null;
+  password: string | null;
+  permission: string | null;
+}
 
 export type ToggleVisiable = (visiable: boolean) => void;
 
 export type ToggleAddCustomer = (
+  id: any,
   customerName: string,
   customerCode: string,
   masothue: string,
@@ -49,7 +59,9 @@ export type ToggleAddCustomer = (
   loaikhachhang: string,
   duration: string,
   numberUser: number,
-  locyversion: number
+  locyversion: number,
+  tongtien: number,
+  dathanhtoan: number
 ) => void;
 
 export type ToggleChangeStatus = (id: number, status: boolean) => void;

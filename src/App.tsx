@@ -12,21 +12,19 @@ import LoginScreen from "./View/Login";
 function App() {
   // const auth: any = useSelector((state: RootState) => state.auth);
   // console.log("auth", auth);
-  console.log("user", localStorage.getItem('user'));
-  const str: string | null = localStorage.getItem('user')
-  const user = str != null ? JSON.parse(str)  : null 
+  console.log("user", localStorage.getItem("user"));
+  const str: string | null = localStorage.getItem("user");
+  const user = str != null ? JSON.parse(str) : null;
   console.log("user", user);
-  
+
   return (
     <Router history={history}>
       <Switch>
-        {user?.accesstoken ? (
+        {/* {user?.accesstoken ? ( */}
+          <Route path="/login" render={() => <LoginScreen />}></Route>
+        {/* ) : ( */}
           <Route path="/" render={() => <TheLayout />}></Route>
-
-        ) : (
-          <Route path="/" render={() => <LoginScreen />}></Route>
-
-        )}
+        {/* )} */}
         {/* <Route path="*" component={Page404} /> */}
       </Switch>
     </Router>

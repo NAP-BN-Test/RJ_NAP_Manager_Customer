@@ -30,6 +30,9 @@ const initState: any = {
       LoaiKhachHang: "",
       Duration: 0,
       LocyVersion: "",
+      TongTien: 0,
+      DaThanhToan: 0,
+      ConNo: 0,
     },
   ],
 };
@@ -55,22 +58,27 @@ const rdc_customer = (state = initState, action: any) => {
     case GET_INFO_CUSTOMER:
       return {
         total: 0,
-        customers: [{
-          ID: action.customers.id,
-          CompanyName: action.customers.companyName,
-          CompanyCode: action.customers.companyCode,
-          MaSoThue: action.customers.masothue,
-          Address: action.customers.address,
-          NguoiDaiDien: action.customers.nguoidaidien,
-          PhoneNumber: action.customers.phonenumber,
-          Email: action.customers.email,
-          LoaiKhachHang: action.customers.loaikhachhang,
-          DateExpired: action.customers.expireDate,
-          Duration: action.customers.duration,
-          NoAccount: parseInt(action.customers.numberUser),
-          NoDayUpdate: action.customers.updatedTime,
-          LocyVersion: action.customers.locyversion,
-        }],
+        customers: [
+          {
+            ID: action.customers.id,
+            CompanyName: action.customers.companyName,
+            CompanyCode: action.customers.companyCode,
+            MaSoThue: action.customers.masothue,
+            Address: action.customers.address,
+            NguoiDaiDien: action.customers.nguoidaidien,
+            PhoneNumber: action.customers.phonenumber,
+            Email: action.customers.email,
+            LoaiKhachHang: action.customers.loaikhachhang,
+            DateExpired: action.customers.expireDate,
+            Duration: action.customers.duration,
+            NoAccount: parseInt(action.customers.numberUser),
+            NoDayUpdate: action.customers.updatedTime,
+            LocyVersion: action.customers.locyversion,
+            DaThanhToan: action.customers.dathanhtoan,
+            TongTien: action.customers.tongtien,
+            DatabaseName: action.customers.dbName,
+          },
+        ],
       };
     case GET_LIST_CUSTOMER_REGISTER:
       return {
@@ -91,6 +99,8 @@ const rdc_customer = (state = initState, action: any) => {
             PhoneNumber: customer.phonenumber,
             Email: customer.email,
             LoaiKhachHang: customer.loaikhachhang,
+            DaThanhToan: customer.dathanhtoan,
+            ConNo: customer.tongtien - customer.dathanhtoan,
           };
         }),
       };

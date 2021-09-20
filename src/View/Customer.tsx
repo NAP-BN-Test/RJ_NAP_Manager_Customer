@@ -8,6 +8,7 @@ function Customer() {
   const dispatch = useDispatch();
 
   function toggleAddCustomer(
+    id: any,
     customerName: string,
     customerCode: string,
     masothue: string,
