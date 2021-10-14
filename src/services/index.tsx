@@ -296,6 +296,34 @@ function addCustomer_v2(req: any) {
     .catch((err) => console.log(err));
 }
 
+function editCustomer(req: any) {
+  let body = {
+    secretKey: secretKey,
+    id: req.id,
+    duration: req.duration,
+    customerName: req.customerName,
+    customerCode: req.customerCode,
+    key: req.key,
+    numberUser: req.numberUser,
+    masothue: req.masothue,
+    address: req.address,
+    nguoidaidien: req.nguoidaidien,
+    phonenumber: req.phonenumber,
+    email: req.email,
+    loaikhachhang: req.loaikhachhang,
+    version: req.locyversion,
+    tongtien: req.tongtien,
+    dathanhtoan: req.dathanhtoan,
+  };
+
+  return axios
+    .post(`${URL}/nap/edit_customer`, body)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+
 function updateCustomer(req: any) {
   let body = {
     secretKey: secretKey,
@@ -599,6 +627,7 @@ export const Services = {
   infoCustomer,
   addCustomer,
   addCustomer_v2,
+  editCustomer,
   updateCustomer,
   create_database,
   create_database_v2,

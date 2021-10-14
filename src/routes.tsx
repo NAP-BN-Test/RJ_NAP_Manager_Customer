@@ -4,6 +4,7 @@ const Main = React.lazy(() => import("./View/Main"));
 const Main2 = React.lazy(() => import("./View/Main2"));
 const Customer = React.lazy(() => import("./View/Customer"));
 const InfoCustomer = React.lazy(() => import("./View/InfoCustomer"));
+const InfoCustomerRegisted = React.lazy(() => import("./View/InfoCustomerRegisted"));
 const ListCustomerRegister = React.lazy(() => import("./View/ListCustomer"));
 const ListCustomerFinance = React.lazy(() => import("./View/ListCustomerFinance"));
 const ExpiredAndStop = React.lazy(() => import("./View/ExpiredAndStop"));
@@ -68,10 +69,17 @@ const routes = [
 
   {
     key: "2",
-    path: "/detail_customer",
+    path: "/detail_customer_register",
     exact: true,
     name: "Thông tin khách hàng",
     component: InfoCustomer,
+  },
+  {
+    key: "3",
+    path: "/detail_customer_registed",
+    exact: true,
+    name: "Thông tin khách hàng",
+    component: InfoCustomerRegisted,
   },
 
   {

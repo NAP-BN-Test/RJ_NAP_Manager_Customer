@@ -9,7 +9,6 @@ import { history } from "../assets/utils/history";
 function LoginScreen() {
   const dispatch = useDispatch();
   const accounts: Account = useSelector((state: RootState) => state.account);
-  console.log(accounts.id);
 
   useEffect(() => {
     if (accounts.permission == "KETOAN") {
@@ -18,6 +17,13 @@ function LoginScreen() {
       history.push("/listcustomerv1");
     }
   }, [accounts.id != null]);
+  useEffect(() => {
+    if (localStorage.getItem("username") != null){
+      let username: any = localStorage.getItem("username")
+      let password: any = localStorage.getItem("password")
+      dispatch(Action.act_login(username, password));
+    } 
+  }, []);
 
   const onFinish = (values: any) => {
     dispatch(Action.act_login(values.username, values.password));

@@ -8,7 +8,7 @@ import { Account, Customer } from "../types";
 
 function ListCustomer() {
   let history = useHistory();
-  const accounts: Account = useSelector((state: RootState) => state.account);
+  // const accounts: Account = useSelector((state: RootState) => state.account);
   const customers: Array<Customer> = useSelector(
     (state: RootState) => state.customer.customers
   );
@@ -24,7 +24,7 @@ function ListCustomer() {
   }
 
   function onUpdate(r: any) {
-    history.push("/detail_customer", { id: r.ID });
+    history.push("/detail_customer_register", { id: r.ID });
   }
 
   const columns = [
@@ -97,7 +97,7 @@ function ListCustomer() {
         <Breadcrumb.Item>Home</Breadcrumb.Item>
         <Breadcrumb.Item>Danh sách khách hàng đăng ký</Breadcrumb.Item>
       </Breadcrumb>
-      {accounts.permission != "KETOAN" ? (
+      {localStorage.getItem("permission") != "KETOAN" ? (
         <Link style={{ fontWeight: "bold" }} to="/add_customer">
           <Button
             style={{ float: "right", marginBottom: "10px" }}

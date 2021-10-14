@@ -133,7 +133,10 @@ function act_get_list_customer2(searchKey: string, pageNumber: number) {
   };
 }
 
-function act_get_list_customer_preexpired(searchKey: string, pageNumber: number) {
+function act_get_list_customer_preexpired(
+  searchKey: string,
+  pageNumber: number
+) {
   return (dispatch: any) => {
     let body = {
       searchKey: searchKey,
@@ -151,7 +154,10 @@ function act_get_list_customer_preexpired(searchKey: string, pageNumber: number)
     });
   };
 }
-function act_get_list_customer_preexpired2(searchKey: string, pageNumber: number) {
+function act_get_list_customer_preexpired2(
+  searchKey: string,
+  pageNumber: number
+) {
   return (dispatch: any) => {
     let body = {
       searchKey: searchKey,
@@ -177,7 +183,7 @@ function act_get_list_customer_expired(searchKey: string, pageNumber: number) {
       page: pageNumber,
     };
     console.log("aaaaaaaaaaaaaaaaaa");
-    
+
     Services.get_list_customer_expired(body).then(async (res) => {
       if (res.status === 1) {
         let customers = res.array;
@@ -342,8 +348,9 @@ function act_login(username: string, password: string) {
     Services.login(body).then((res: any) => {
       if (res.status === 1) {
         dispatch(act_alert_success("Đăng nhập thành công!"));
-        console.log(res.data);
-        
+        localStorage.setItem("username", res.data.Username);
+        localStorage.setItem("password", res.data.Password);
+        localStorage.setItem("permission", res.data.Permission);
         dispatch(func_login(res.data));
         // window.location.reload();
       } else {
@@ -371,7 +378,7 @@ function act_get_info_customers(id: number) {
   };
 }
 
-// nút save
+// nút save thêm mới
 function act_add_customers(
   customerName: string,
   customerCode: string,
@@ -407,12 +414,104 @@ function act_add_customers(
       dispatch(act_hide_loading());
       if (addCustomer.status === 1) {
         // console.log("Thêm dữ liệu thành công");
-        history.push(
-          "/listcustomerRegister"
-        );
+        history.push("/listcustomerRegister");
         dispatch(act_alert_success("Thêm dữ liệu thành công!"));
       } else {
         dispatch(act_alert_error("Thêm dữ liệu không thành công!"));
+      }
+    });
+  };
+}
+// nút save khi sale sửa
+function act_edit_customers(
+  id: number,
+  customerName: string,
+  customerCode: string,
+  masothue: string,
+  address: string,
+  nguoidaidien: string,
+  phonenumber: string,
+  email: string,
+  loaikhachhang: string,
+  duration: string,
+  numberUser: number,
+  locyversion: number,
+  tongtien: number,
+  dathanhtoan: number
+) {
+  return (dispatch: any) => {
+    let body = {
+      id: id,
+      customerName: customerName,
+      customerCode: customerCode,
+      masothue: masothue,
+      address: address,
+      nguoidaidien: nguoidaidien,
+      phonenumber: phonenumber,
+      email: email,
+      loaikhachhang: loaikhachhang,
+      duration: duration,
+      numberUser: numberUser,
+      locyversion: locyversion,
+      tongtien: tongtien,
+      dathanhtoan: dathanhtoan,
+      key: genKey(),
+    };
+    Services.editCustomer(body).then((addCustomer: any) => {
+      if (addCustomer.status === 1) {
+        // console.log("Thêm dữ liệu thành công");
+        if (localStorage.getItem("permission") == "SALE") {
+          history.push("/listcustomerRegister");
+        }
+        dispatch(act_alert_success("Sửa dữ liệu thành công!"));
+      } else {
+        dispatch(act_alert_error("Sửa dữ liệu không thành công!"));
+      }
+    });
+  };
+}
+// nút save khi sale sửa đã đăng kí
+function act_edit_customers_registed(
+  id: number,
+  customerName: string,
+  customerCode: string,
+  masothue: string,
+  address: string,
+  nguoidaidien: string,
+  phonenumber: string,
+  email: string,
+  loaikhachhang: string,
+  duration: string,
+  numberUser: number,
+  locyversion: number,
+  tongtien: number,
+  dathanhtoan: number
+) {
+  return (dispatch: any) => {
+    let body = {
+      id: id,
+      customerName: customerName,
+      customerCode: customerCode,
+      masothue: masothue,
+      address: address,
+      nguoidaidien: nguoidaidien,
+      phonenumber: phonenumber,
+      email: email,
+      loaikhachhang: loaikhachhang,
+      duration: duration,
+      numberUser: numberUser,
+      locyversion: locyversion,
+      tongtien: tongtien,
+      dathanhtoan: dathanhtoan,
+      key: genKey(),
+    };
+    Services.editCustomer(body).then((addCustomer: any) => {
+      if (addCustomer.status === 1) {
+        // console.log("Thêm dữ liệu thành công");
+        history.push("/listcustomerFinance");
+        dispatch(act_alert_success("Sửa dữ liệu thành công!"));
+      } else {
+        dispatch(act_alert_error("Sửa dữ liệu không thành công!"));
       }
     });
   };
@@ -509,6 +608,8 @@ function act_add_customersDB(
                                         Services.create_login(
                                           bodyAddatabase
                                         ).then((createLogin: any) => {
+                                          console.log(createLogin);
+
                                           dispatch(act_hide_loading());
                                           if (createLogin.status === 1) {
                                             dispatch(
@@ -526,39 +627,37 @@ function act_add_customersDB(
                                                     "Thêm khách hàng vào danh sách..."
                                                   )
                                                 );
-                                                Services.updateCustomer(body).then(
-                                                  (addCustomer: any) => {
-                                                    dispatch(
-                                                      act_hide_loading()
+                                                Services.updateCustomer(
+                                                  body
+                                                ).then((addCustomer: any) => {
+                                                  console.log(
+                                                    "addCustomer",
+                                                    addCustomer
+                                                  );
+
+                                                  dispatch(act_hide_loading());
+                                                  if (
+                                                    addCustomer.status === 1
+                                                  ) {
+                                                    Services.add_config_database(
+                                                      bodyConfig
+                                                    ).then((addConfig: any) => {
+                                                      if (
+                                                        addConfig.status === 1
+                                                      ) {
+                                                        history.push("/main");
+                                                      } else {
+                                                        console.log(
+                                                          "Thêm config không thành công"
+                                                        );
+                                                      }
+                                                    });
+                                                  } else {
+                                                    console.log(
+                                                      "Thêm customer không thành công"
                                                     );
-                                                    if (
-                                                      addCustomer.status === 1
-                                                    ) {
-                                                      Services.add_config_database(
-                                                        bodyConfig
-                                                      ).then(
-                                                        (addConfig: any) => {
-                                                          if (
-                                                            addConfig.status ===
-                                                            1
-                                                          ) {
-                                                            history.push(
-                                                              "/main"
-                                                            );
-                                                          } else {
-                                                            console.log(
-                                                              "Thêm config không thành công"
-                                                            );
-                                                          }
-                                                        }
-                                                      );
-                                                    } else {
-                                                      console.log(
-                                                        "Thêm customer không thành công"
-                                                      );
-                                                    }
                                                   }
-                                                );
+                                                });
                                               } else {
                                                 console.log(
                                                   "Nối user vào database không thành công"
@@ -683,6 +782,10 @@ function act_add_customersDB(
                                                   Services.updateCustomer(
                                                     body
                                                   ).then((addCustomer: any) => {
+                                                    console.log(
+                                                      "addCustomer",
+                                                      addCustomer
+                                                    );
                                                     dispatch(
                                                       act_hide_loading()
                                                     );
@@ -776,6 +879,8 @@ export const Action = {
   act_get_list_customer_expired2,
   act_get_list_customer_register,
   act_get_list_customer_finance,
+  act_edit_customers,
+  act_edit_customers_registed,
   act_change_status,
   act_change_date,
   act_change_noAccount,

@@ -99,6 +99,7 @@ const rdc_customer = (state = initState, action: any) => {
             PhoneNumber: customer.phonenumber,
             Email: customer.email,
             LoaiKhachHang: customer.loaikhachhang,
+            TongTien: customer.tongtien,
             DaThanhToan: customer.dathanhtoan,
             ConNo: customer.tongtien - customer.dathanhtoan,
           };

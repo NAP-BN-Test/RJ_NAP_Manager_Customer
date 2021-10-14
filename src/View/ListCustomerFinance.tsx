@@ -24,13 +24,12 @@ function ListCustomerFinance() {
   }
 
   function onUpdate(r: any) {
-    history.push("/detail_customer",
-      {id: r.ID});
+    history.push("/detail_customer_registed", { id: r.ID });
   }
   function onShowSizeChange(current: number) {
     dispatch(Action.act_get_list_customer_finance(current, ""));
   }
-  function getlistcustomerSearch(searchKey: string,) {
+  function getlistcustomerSearch(searchKey: string) {
     dispatch(Action.act_get_list_customer_finance(1, searchKey));
   }
 
@@ -105,23 +104,29 @@ function ListCustomerFinance() {
         <Breadcrumb.Item>Theo dõi công nợ khách hàng</Breadcrumb.Item>
       </Breadcrumb>
       <div className="input-search">
-        <Search placeholder="input keyword" allowClear enterButton="search" onSearch={getlistcustomerSearch}/>
+        <Search
+          placeholder="input keyword"
+          allowClear
+          enterButton="search"
+          onSearch={getlistcustomerSearch}
+        />
       </div>
-      <Link style={{ fontWeight: "bold" }} to="/add_customer">
+      {/* <Link style={{ fontWeight: "bold" }} to="/add_customer">
         <Button style={{ float: "right", marginBottom: "10px", marginTop: "10px" }} type="primary">
           Thêm mới
         </Button>
-      </Link>
-
-      <Table
-        onRow={(r) => ({
-          // onMouseEnter: () => updateEdit(r),
-          onDoubleClick: () => onUpdate(r),
-        })}
-        dataSource={customers}
-        columns={columns}
-        pagination={{total: total, onChange: onShowSizeChange}}
-      />
+      </Link> */}
+      <div className="site-form-content">
+        <Table
+          onRow={(r) => ({
+            // onMouseEnter: () => updateEdit(r),
+            onDoubleClick: () => onUpdate(r),
+          })}
+          dataSource={customers}
+          columns={columns}
+          pagination={{ total: total, onChange: onShowSizeChange }}
+        />
+      </div>
     </div>
   );
 }

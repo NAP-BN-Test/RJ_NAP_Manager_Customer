@@ -30,7 +30,8 @@ function EditCustomer(props: PropsAddCustomer) {
   const customers: Customer = useSelector(
     (state: RootState) => state.customer.customers[0]
   );
-  const accounts: Account = useSelector((state: RootState) => state.account);
+
+  // const accounts: Account = useSelector((state: RootState) => state.account);
   const loading = useSelector((state: RootState) => state.loading);
   const [tongtien, setTongTien] = useState(Number);
   const [daThanhToan, setDaThanhToan] = useState(Number);
@@ -45,21 +46,20 @@ function EditCustomer(props: PropsAddCustomer) {
     setIsCustomer(objectID.id);
     dispatch(Action.act_get_info_customers(objectID.id));
   }, [location]);
-  // useEffect(() => {
 
-  // }, []);
   useEffect(() => {
-    console.log(customers.DatabaseName);
-    console.log(customers.DatabaseName.length);
     setTongTien(customers.TongTien);
     setDaThanhToan(customers.DaThanhToan);
     setConNo(customers.TongTien - customers.DaThanhToan);
-    if (accounts.permission != "KETOAN" && customers.DatabaseName.length == 0) {
+    if (
+      localStorage.getItem("permission") != "KETOAN" &&
+      customers.DatabaseName == undefined
+    ) {
       setIsDisable(false);
       setIsDisableRequire(false);
     } else if (
-      accounts.permission != "KETOAN" &&
-      customers.DatabaseName.length > 0
+      localStorage.getItem("permission") != "KETOAN" &&
+      customers.DatabaseName?.length > 0
     ) {
       setIsDisable(false);
     }
@@ -197,62 +197,59 @@ function EditCustomer(props: PropsAddCustomer) {
             placeholder="Chọn số lượng user được sử dụng"
           />
         </Form.Item>
-        <Form.Item
-          name="tongtien"
-          label="Tổng tiền"
-          // rules={[{ required: true }]}
-        >
-          <InputNumber
-            // defaultValue={1000}
-            value={tongtien}
-            style={{ width: "100%" }}
-            formatter={(value) =>
-              `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            }
-            // parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-            onChange={(value) => {
-              console.log(Number(value) - daThanhToan);
+        {localStorage.getItem("permission") == "SALE" ? null : (
+          <div>
+            <Form.Item
+              name="tongtien"
+              label="Tổng tiền"
+              // rules={[{ required: true }]}
+            >
+              <InputNumber
+                // defaultValue={1000}
+                value={tongtien}
+                style={{ width: "100%" }}
+                formatter={(value) =>
+                  `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                // parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                onChange={(value) => {
+                  console.log(Number(value) - daThanhToan);
 
-              setTongTien(Number(value));
-              setConNo(Number(value) - daThanhToan);
-            }}
-          />
-        </Form.Item>
+                  setTongTien(Number(value));
+                  setConNo(Number(value) - daThanhToan);
+                }}
+              />
+            </Form.Item>
 
-        <Form.Item
-          name="dathanhtoan"
-          label="Đã thanh toán"
-          // rules={[{ required: true }]}
-        >
-          <InputNumber
-            // defaultValue={1000}
-            value={daThanhToan}
-            style={{ width: "100%" }}
-            formatter={(value) =>
-              `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            }
-            // parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-            onChange={(value) => {
-              setDaThanhToan(Number(value));
-              setConNo(tongtien - Number(value));
-            }}
-          />
-        </Form.Item>
-        {/* <Form.Item
-        name="currency"
-        label="Còn nợ"
-        // rules={[{ required: true }]}
-      > */}
-        <div>Còn nợ</div>
-        <InputNumber
-          value={conno}
-          style={{ width: "100%", marginTop: 8, marginBottom: 24 }}
-          formatter={(value) =>
-            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-          }
-          // parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-          // onChange={onChange}
-        />
+            <Form.Item
+              name="dathanhtoan"
+              label="Đã thanh toán"
+              // rules={[{ required: true }]}
+            >
+              <InputNumber
+                // defaultValue={1000}
+                value={daThanhToan}
+                style={{ width: "100%" }}
+                formatter={(value) =>
+                  `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                // parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                onChange={(value) => {
+                  setDaThanhToan(Number(value));
+                  setConNo(tongtien - Number(value));
+                }}
+              />
+            </Form.Item>
+            <div>Còn nợ</div>
+            <InputNumber
+              value={conno}
+              style={{ width: "100%", marginTop: 8, marginBottom: 24 }}
+              formatter={(value) =>
+                `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              }
+            />
+          </div>
+        )}
         {/* </Form.Item> */}
         <Form.Item
           name="locyversion"

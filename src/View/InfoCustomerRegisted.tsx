@@ -5,7 +5,7 @@ import EditCustomer from "../Component/Customer/EditCustomer";
 import { Account } from "../types";
 import { RootState } from "../redux/reducers/index.reducer";
 
-function InfoCustomer() {
+function InfoCustomerRegisted() {
   const dispatch = useDispatch();
   // const accounts: Account = useSelector((state: RootState) => state.account);
   async function toggleAddCustomer(
@@ -24,9 +24,8 @@ function InfoCustomer() {
     tongtien: number,
     dathanhtoan: number
   ) {
-    if (localStorage.getItem("permission") == "SALE") {
       dispatch(
-        Action.act_edit_customers(
+        Action.act_edit_customers_registed(
           id,
           customerName,
           customerCode,
@@ -43,55 +42,6 @@ function InfoCustomer() {
           dathanhtoan
         )
       );
-    } else if (localStorage.getItem("permission") == "KETOAN") {
-      dispatch(
-        Action.act_add_customersDB(
-          id,
-          customerName,
-          customerCode,
-          duration,
-          numberUser,
-          customerCode,
-          phonenumber,
-          locyversion,
-          tongtien,
-          dathanhtoan
-        )
-      );
-    } else {
-      await dispatch(
-        Action.act_edit_customers(
-          id,
-          customerName,
-          customerCode,
-          masothue,
-          address,
-          nguoidaidien,
-          phonenumber,
-          email,
-          loaikhachhang,
-          duration,
-          numberUser,
-          locyversion,
-          tongtien,
-          dathanhtoan
-        )
-      );
-      dispatch(
-        Action.act_add_customersDB(
-          id,
-          customerName,
-          customerCode,
-          duration,
-          numberUser,
-          customerCode,
-          phonenumber,
-          locyversion,
-          tongtien,
-          dathanhtoan
-        )
-      );
-    }
   }
   return (
     <div className="site-layout-content">
@@ -106,4 +56,4 @@ function InfoCustomer() {
   );
 }
 
-export default InfoCustomer;
+export default InfoCustomerRegisted;
