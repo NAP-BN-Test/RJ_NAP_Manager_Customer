@@ -67,7 +67,7 @@ function AddCustomer(props: PropsAddCustomer) {
         >
           <Input placeholder="Nhập mã khách hàng" />
         </Form.Item>
-        <Form.Item name="masothue" label="MST" rules={[{ required: true }]}>
+        <Form.Item name="masothue" label="MST" rules={[{ required: true }]} >
           <Input placeholder="Nhập MST" />
         </Form.Item>
         <Form.Item name="address" label="Địa chỉ" rules={[{ required: true }]}>

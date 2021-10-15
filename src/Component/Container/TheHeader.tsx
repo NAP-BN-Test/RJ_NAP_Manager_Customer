@@ -106,6 +106,22 @@ function TheHeader() {
           src="https://namanphu.vn/wp-content/uploads/2020/09/LOGO-TIM3.png"
           height="100%"
         />
+        <Popconfirm
+          title="Bạn có thoát không?"
+          onConfirm={confirm}
+          onCancel={cancel}
+          okText="Yes"
+          cancelText="No"
+        >
+          <IconButton
+            onClick={confirm}
+            style={{ float: "right", paddingTop: "25px" }}
+            color="primary"
+            aria-label="add to shopping cart"
+          >
+            {logout1}
+          </IconButton>
+        </Popconfirm>
         {localStorage.getItem("permission") != "KETOAN" ? (
           <Menu.Item key={0}>
             <Dropdown
@@ -183,22 +199,7 @@ function TheHeader() {
           );
         })} */}
         {/* <Col > */}
-        <Popconfirm
-          title="Bạn có thoát không?"
-          onConfirm={confirm}
-          onCancel={cancel}
-          okText="Yes"
-          cancelText="No"
-        >
-          <IconButton
-            onClick={confirm}
-            style={{ float: "right", paddingTop: "25px" }}
-            color="primary"
-            aria-label="add to shopping cart"
-          >
-            {logout1}
-          </IconButton>
-        </Popconfirm>
+        
         {/* </Col> */}
       </Menu>
     </Header>

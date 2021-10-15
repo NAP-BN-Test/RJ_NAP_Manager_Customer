@@ -2,6 +2,7 @@ import update from "immutability-helper";
 import {
   ADD_CUSTOMER,
   DELETE_CUSTOMER,
+  DELETE_CUSTOMER_REGISTER,
   EDIT_DATE,
   EDIT_NO_ACCOUNT,
   EDIT_STATUS,
@@ -44,6 +45,7 @@ const rdc_customer = (state = initState, action: any) => {
         total: action.totals,
         customers: action.customers.map((customer: any) => {
           return {
+            key: customer.id,
             ID: customer.id,
             CompanyName: customer.name,
             DatabaseName: customer.dbName,
@@ -60,6 +62,7 @@ const rdc_customer = (state = initState, action: any) => {
         total: 0,
         customers: [
           {
+            key: action.customers.id,
             ID: action.customers.id,
             CompanyName: action.customers.companyName,
             CompanyCode: action.customers.companyCode,
@@ -85,6 +88,7 @@ const rdc_customer = (state = initState, action: any) => {
         total: action.totals,
         customers: action.customers.map((customer: any) => {
           return {
+            key: customer.id,
             ID: customer.id,
             CompanyName: customer.name,
             DatabaseName: customer.dbName,
@@ -154,6 +158,23 @@ const rdc_customer = (state = initState, action: any) => {
         customers: {
           $splice: [[indexDelete, 1]],
         },
+      });
+
+    case DELETE_CUSTOMER_REGISTER:
+      
+      return action.arrid.map(async (items: any) => {
+        console.log('items', items);
+        var idxDelete = 0;
+        idxDelete = await state.customers.findIndex(
+          (cus: any) => cus.ID === items
+        );
+        console.log('idxDelete', idxDelete);
+        // return update(state, {
+        //   customers: {
+        //     $splice: [[idxDelete, 1]],
+        //   },
+        // });
+        
       });
     default:
       return state;

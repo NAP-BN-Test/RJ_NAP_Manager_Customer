@@ -22,7 +22,7 @@ function Customer() {
     locyversion: number
   ) {
     dispatch(
-      Action.act_add_customers(
+      Action.act_check_mst({
         customerName,
         customerCode,
         masothue,
@@ -34,8 +34,23 @@ function Customer() {
         duration,
         numberUser,
         locyversion
-      )
+      })
     );
+    // dispatch(
+    //   Action.act_add_customers(
+    //     customerName,
+    //     customerCode,
+    //     masothue,
+    //     address,
+    //     nguoidaidien,
+    //     phonenumber,
+    //     email,
+    //     loaikhachhang,
+    //     duration,
+    //     numberUser,
+    //     locyversion
+    //   )
+    // );
   }
   return (
     <div className="site-layout-content">

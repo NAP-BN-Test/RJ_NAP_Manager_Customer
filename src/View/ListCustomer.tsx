@@ -1,5 +1,5 @@
-import { Breadcrumb, Button, Table } from "antd";
-import React, { useEffect } from "react";
+import { Breadcrumb, Button, notification, Table } from "antd";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Action } from "../redux/actions/index.action";
@@ -12,7 +12,11 @@ function ListCustomer() {
   const customers: Array<Customer> = useSelector(
     (state: RootState) => state.customer.customers
   );
-  console.log(customers);
+
+  const [listCustomerSelect, setlistCustomerSelect] = useState([] as any);
+  const [selectedRowKeys, setselectedRowKeys] = useState([]);
+  console.log("row", selectedRowKeys);
+  console.log("arrid", listCustomerSelect);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -91,6 +95,37 @@ function ListCustomer() {
     // },
   ];
 
+  // const rowSelection = {
+  //   onChange: async (selectedRowKeys :any, selectedRows:any) => {
+  //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+  //     const newArr = [] as any
+  //     await selectedRows.map((item: any)=>{
+  //       newArr.push(item.ID)
+  //     })
+  //     setlistCustomerSelect(newArr);
+  //   },
+  //   onSelect: (record: any, selected: any, selectedRows: any) => {
+  //     console.log(record, selected, selectedRows);
+  //   },
+  //   onSelectAll: (selected: any, selectedRows: any, changeRows: any) => {
+  //     console.log(selected, selectedRows, changeRows);
+  //   },
+  // };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: async (selectedRowKeys: any, selectedRows: any) => {
+      console.log("selectedRowKeys", selectedRowKeys);
+
+      setselectedRowKeys(selectedRowKeys);
+      const newArr = [] as any;
+      await selectedRows.map((item: any) => {
+        newArr.push(item.ID);
+      });
+      setlistCustomerSelect(newArr);
+    },
+  };
+
   return (
     <div className="site-layout-content">
       <Breadcrumb style={{ margin: "16px 0px" }}>
@@ -98,17 +133,48 @@ function ListCustomer() {
         <Breadcrumb.Item>Danh sách khách hàng đăng ký</Breadcrumb.Item>
       </Breadcrumb>
       {localStorage.getItem("permission") != "KETOAN" ? (
-        <Link style={{ fontWeight: "bold" }} to="/add_customer">
-          <Button
-            style={{ float: "right", marginBottom: "10px" }}
-            type="primary"
-          >
-            Thêm mới
-          </Button>
-        </Link>
+        <>
+          <Link style={{ fontWeight: "bold" }} to="/add_customer">
+            <Button
+              style={{ float: "right", marginBottom: "10px" }}
+              type="primary"
+            >
+              Thêm mới
+            </Button>
+          </Link>
+
+          {listCustomerSelect.length > 0 ? (
+            <Button
+              style={{
+                float: "right",
+                marginBottom: "10px",
+                marginRight: "10px",
+              }}
+              type="primary"
+              onClick={() => {
+                // dispatch(Action.act_deleteDB())
+                if (listCustomerSelect.length > 0) {
+                  dispatch(
+                    Action.act_deleteCustomerRegister(listCustomerSelect)
+                  );
+                } else {
+                  notification["warning"]({
+                    message: "Warning",
+                    description: "Chưa chọn",
+                  });
+                }
+              }}
+            >
+              Xóa
+            </Button>
+          ) : null}
+        </>
       ) : null}
 
       <Table
+        rowSelection={{
+          ...rowSelection,
+        }}
         onRow={(r) => ({
           // onMouseEnter: () => updateEdit(r),
           onDoubleClick: () => onUpdate(r),

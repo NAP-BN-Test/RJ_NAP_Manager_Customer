@@ -3,6 +3,7 @@ import * as constants from "../constants/index";
 import { Services } from "../../services/index";
 import { genKey } from "../../assets/utils";
 import { history } from "../../assets/utils/history";
+import { Alert } from "antd";
 
 export interface Get_List_Customer {
   type: constants.GET_LIST_CUSTOMER;
@@ -66,6 +67,13 @@ function func_delete_DB(customerId: number) {
   return {
     type: constants.DELETE_CUSTOMER,
     customerId: customerId,
+  };
+}
+
+function func_delete_customerRegister(arrid: any) {
+  return {
+    type: constants.DELETE_CUSTOMER_REGISTER,
+    arrid: arrid,
   };
 }
 
@@ -413,6 +421,7 @@ function act_add_customers(
 
       dispatch(act_hide_loading());
       if (addCustomer.status === 1) {
+        
         // console.log("Thêm dữ liệu thành công");
         history.push("/listcustomerRegister");
         dispatch(act_alert_success("Thêm dữ liệu thành công!"));
@@ -870,7 +879,74 @@ function act_add_customersDB(
   };
 }
 
+
+function act_deleteCustomerRegister(arrid: any) {
+  return (dispatch: any) => {
+    let body = {
+      arrid: arrid,
+    };
+
+    Services.deleteCustomerRegister(body).then((res: any) => {
+      if (res.status === 1) {
+        // dispatch(func_delete_customerRegister(arrid));
+        dispatch(act_get_list_customer_register(1))
+        dispatch(act_alert_success("Xoá khách hàng thành công!"));
+        // window.location.reload();
+      } else {
+        console.log("Xóa khách hàng không thành công");
+      }
+    });
+  };
+}
+
+function act_check_mst(req: any) {
+  return (dispatch: any) => {
+    let body = {
+      dbName: req.dbName,
+      masothue: req.masothue
+    };
+
+    Services.check_mst(body).then((res: any) => {
+      if (res.status === 1) {
+        dispatch(act_add_customers(
+            req.customerName,
+            req.customerCode,
+            req.masothue,
+            req.address,
+            req.nguoidaidien,
+            req.phonenumber,
+            req.email,
+            req.loaikhachhang,
+            req.duration,
+            req.numberUser,
+            req.locyversion
+          )
+        );
+      } else {
+        var r = window.confirm("Mã số thuế đã tồn tại bạn có muốn thêm khách hàng không?");
+      if (r == true) {
+        dispatch(act_add_customers(
+            req.customerName,
+            req.customerCode,
+            req.masothue,
+            req.address,
+            req.nguoidaidien,
+            req.phonenumber,
+            req.email,
+            req.loaikhachhang,
+            req.duration,
+            req.numberUser,
+            req.locyversion
+          )
+        );
+      }
+      }
+    });
+  };
+}
 export const Action = {
+  act_check_mst,
+  act_deleteCustomerRegister,
   act_get_list_customer,
   act_get_list_customer2,
   act_get_list_customer_preexpired,

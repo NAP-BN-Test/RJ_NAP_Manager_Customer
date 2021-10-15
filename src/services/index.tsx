@@ -269,6 +269,9 @@ function addCustomer(req: any) {
     version: req.locyversion,
   };
 
+  console.log(body);
+  
+
   return axios
     .post(`${URL}/nap/add_customer`, body)
     .then((res) => {
@@ -606,7 +609,41 @@ function add_config_database(req: any) {
     .catch((err) => console.log(err));
 }
 
+function deleteCustomerRegister(req: any) {
+  let body = {
+    secretKey: secretKey,
+    arrid: req.arrid,
+  };
+
+  console.log(body);
+  
+
+  return axios
+    .post(`${URL}/nap/delete_customer`, body)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+
+function check_mst(req: any) {
+  let body = {
+    dbName: req.dbName,
+    secretKey: secretKey,
+    masothue: req.masothue
+  };
+  console.log(body);
+
+  return axios
+    .post(`${URL}/nap/check_mst`, body)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
 export const Services = {
+  check_mst,
+  deleteCustomerRegister,
   login,
   get_list_customer,
   get_list_customer_v2,
