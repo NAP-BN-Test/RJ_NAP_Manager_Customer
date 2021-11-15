@@ -34,6 +34,10 @@ function Main() {
     dispatch(Action.act_get_list_customer(searchKey, 1));
   }
 
+  //copy
+  const [codeSnippet, setcodeSnippet] = useState("");
+  
+
   return (
     <div className="site-layout-content">
       <Breadcrumb style={{ margin: "16px 0px" }}>

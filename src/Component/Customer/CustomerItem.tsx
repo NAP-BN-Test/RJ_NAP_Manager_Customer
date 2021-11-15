@@ -1,16 +1,17 @@
-import { Descriptions } from "antd";
+import { Button, Descriptions, notification } from "antd";
 import Form from "antd/lib/form/Form";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { convert_date } from "../../assets/utils";
 import { Action } from "../../redux/actions/index.action";
-import {
-  Customer,
-} from "../../types";
+import { Customer } from "../../types";
 import ModalDetailCustomer from "../Modal/Modal.DetailCustomer";
 import ModalEditDate from "../Modal/Modal.EditDate";
 import ModalEditNoAccount from "../Modal/Modal.EditNoAccount";
-
+import {
+  CopyrightOutlined,
+} from "@ant-design/icons";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 interface PropsCustomerItem {
   customers: Customer;
 }
@@ -21,6 +22,13 @@ function CustomerItem(props: PropsCustomerItem) {
   const [visibleEditNoAccount, setVisibleEditNoAccount] = useState(false);
   const [newDate, setNewDate] = useState("");
   const [newNoAccount, setNewNoAccount] = useState(5);
+  const [codeSnippet, setcodeSnippet] = useState(`
+Customer: ${props.customers.CompanyName},
+Database: ${props.customers.DatabaseName},
+userDB: ${props.customers.Username},
+password: 123456a$
+    
+    `);
   const dispatch = useDispatch();
 
   function showModal() {
@@ -56,8 +64,22 @@ function CustomerItem(props: PropsCustomerItem) {
   function toggleOnChangeNoAccount(e: any) {
     setNewNoAccount(e.target.value);
   }
-  function toggleChangeNoAccount(customerId: number, dbName: string, username: string, noAccount: number, customerName: string) {
-    dispatch(Action.act_change_noAccount(customerId, dbName, username, noAccount, customerName));
+  function toggleChangeNoAccount(
+    customerId: number,
+    dbName: string,
+    username: string,
+    noAccount: number,
+    customerName: string
+  ) {
+    dispatch(
+      Action.act_change_noAccount(
+        customerId,
+        dbName,
+        username,
+        noAccount,
+        customerName
+      )
+    );
     setVisibleCustomer(false);
     setVisibleEditNoAccount(false);
   }
@@ -65,6 +87,12 @@ function CustomerItem(props: PropsCustomerItem) {
     dispatch(Action.act_deleteDB(dbName, username, id));
     setVisibleCustomer(false);
   }
+
+  const onCopyText = () => {
+    notification["success"]({
+      message: "Copy thành công",
+    });
+  };
 
   return (
     <div className="boder-item-customer">
@@ -104,8 +132,18 @@ function CustomerItem(props: PropsCustomerItem) {
         toggleOnChangeNoAccount={(e) => toggleOnChangeNoAccount(e)}
         toggleChangeNoAccount={toggleChangeNoAccount}
       />
-      <Form onClick={showModal}>
-        <Descriptions title={props.customers.CompanyName}>
+      <Form onDoubleClick={showModal}>
+        <Descriptions title={props.customers.CompanyName} extra={<CopyToClipboard text={codeSnippet} onCopy={onCopyText}>
+                  <Button
+                    type="primary"
+                    icon={<CopyrightOutlined />}
+                    size="large"
+                    style={{marginRight: '10px', borderRadius: '50px'}}
+                  ></Button>
+                  {/* <CopyrightOutlined
+            style={{ marginRight: "15px", fontSize: "15px" }}
+          /> */}
+            </CopyToClipboard>}>
           <Descriptions.Item label="Database">
             {props.customers.DatabaseName}
           </Descriptions.Item>
@@ -130,6 +168,8 @@ function CustomerItem(props: PropsCustomerItem) {
           <Descriptions.Item label="Ngày cập nhật">
             {convert_date(props.customers.NoDayUpdate)}
           </Descriptions.Item>
+
+          
         </Descriptions>
       </Form>
     </div>
