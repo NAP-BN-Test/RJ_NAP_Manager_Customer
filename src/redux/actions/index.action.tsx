@@ -421,7 +421,6 @@ function act_add_customers(
 
       dispatch(act_hide_loading());
       if (addCustomer.status === 1) {
-        
         // console.log("Thêm dữ liệu thành công");
         history.push("/listcustomerRegister");
         dispatch(act_alert_success("Thêm dữ liệu thành công!"));
@@ -879,7 +878,6 @@ function act_add_customersDB(
   };
 }
 
-
 function act_deleteCustomerRegister(arrid: any) {
   return (dispatch: any) => {
     let body = {
@@ -889,7 +887,7 @@ function act_deleteCustomerRegister(arrid: any) {
     Services.deleteCustomerRegister(body).then((res: any) => {
       if (res.status === 1) {
         // dispatch(func_delete_customerRegister(arrid));
-        dispatch(act_get_list_customer_register(1))
+        dispatch(act_get_list_customer_register(1));
         dispatch(act_alert_success("Xoá khách hàng thành công!"));
         // window.location.reload();
       } else {
@@ -903,12 +901,13 @@ function act_check_mst(req: any) {
   return (dispatch: any) => {
     let body = {
       dbName: req.dbName,
-      masothue: req.masothue
+      masothue: req.masothue,
     };
 
     Services.check_mst(body).then((res: any) => {
       if (res.status === 1) {
-        dispatch(act_add_customers(
+        dispatch(
+          act_add_customers(
             req.customerName,
             req.customerCode,
             req.masothue,
@@ -923,27 +922,52 @@ function act_check_mst(req: any) {
           )
         );
       } else {
-        var r = window.confirm("Mã số thuế đã tồn tại bạn có muốn thêm khách hàng không?");
-      if (r == true) {
-        dispatch(act_add_customers(
-            req.customerName,
-            req.customerCode,
-            req.masothue,
-            req.address,
-            req.nguoidaidien,
-            req.phonenumber,
-            req.email,
-            req.loaikhachhang,
-            req.duration,
-            req.numberUser,
-            req.locyversion
-          )
+        var r = window.confirm(
+          "Mã số thuế đã tồn tại bạn có muốn thêm khách hàng không?"
         );
-      }
+        if (r == true) {
+          dispatch(
+            act_add_customers(
+              req.customerName,
+              req.customerCode,
+              req.masothue,
+              req.address,
+              req.nguoidaidien,
+              req.phonenumber,
+              req.email,
+              req.loaikhachhang,
+              req.duration,
+              req.numberUser,
+              req.locyversion
+            )
+          );
+        }
       }
     });
   };
 }
+
+function backup_database(req: any) {
+  return (dispatch: any) => {
+    dispatch(act_show_loading("Đang copy Database ..."));
+    Services.backup_database(req).then((res: any) => {
+      console.log(res);
+      if (res.status = 1) {
+        dispatch(act_hide_loading());
+        window.location.reload()
+        // if (res.obj.version = 1) {
+        //   history.push("/listcustomerv1");
+        // } else {
+        //   history.push("/listcustomerv2");
+        // }
+        dispatch(act_alert_success("Copy dữ liệu thành công"));
+      }else{
+        dispatch(act_alert_error("Không copy được dữ liệu"));
+      }
+    });
+  };
+}
+
 export const Action = {
   act_check_mst,
   act_deleteCustomerRegister,
@@ -965,4 +989,5 @@ export const Action = {
   act_add_customersDB,
   act_add_customers,
   act_login,
+  backup_database,
 };

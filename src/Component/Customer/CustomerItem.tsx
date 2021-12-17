@@ -8,9 +8,7 @@ import { Customer } from "../../types";
 import ModalDetailCustomer from "../Modal/Modal.DetailCustomer";
 import ModalEditDate from "../Modal/Modal.EditDate";
 import ModalEditNoAccount from "../Modal/Modal.EditNoAccount";
-import {
-  CopyrightOutlined,
-} from "@ant-design/icons";
+import { CopyrightOutlined } from "@ant-design/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 interface PropsCustomerItem {
   customers: Customer;
@@ -27,7 +25,6 @@ Customer: ${props.customers.CompanyName},
 Database: ${props.customers.DatabaseName},
 userDB: ${props.customers.Username},
 password: 123456a$
-    
     `);
   const dispatch = useDispatch();
 
@@ -89,9 +86,13 @@ password: 123456a$
   }
 
   const onCopyText = () => {
-    notification["success"]({
-      message: "Copy thành công",
-    });
+    dispatch(
+      Action.backup_database({
+        id: props.customers.ID,
+        dbName: props.customers.DatabaseName,
+        username: props.customers.Username,
+      })
+    );
   };
 
   return (
@@ -133,17 +134,19 @@ password: 123456a$
         toggleChangeNoAccount={toggleChangeNoAccount}
       />
       <Form onDoubleClick={showModal}>
-        <Descriptions title={props.customers.CompanyName} extra={<CopyToClipboard text={codeSnippet} onCopy={onCopyText}>
-                  <Button
-                    type="primary"
-                    icon={<CopyrightOutlined />}
-                    size="large"
-                    style={{marginRight: '10px', borderRadius: '50px'}}
-                  ></Button>
-                  {/* <CopyrightOutlined
-            style={{ marginRight: "15px", fontSize: "15px" }}
-          /> */}
-            </CopyToClipboard>}>
+        <Descriptions
+          title={props.customers.CompanyName}
+          extra={
+            <CopyToClipboard text={codeSnippet} onCopy={onCopyText}>
+              <Button
+                type="primary"
+                icon={<CopyrightOutlined />}
+                size="large"
+                style={{ marginRight: "10px", borderRadius: "50px" }}
+              ></Button>
+            </CopyToClipboard>
+          }
+        >
           <Descriptions.Item label="Database">
             {props.customers.DatabaseName}
           </Descriptions.Item>
@@ -168,8 +171,6 @@ password: 123456a$
           <Descriptions.Item label="Ngày cập nhật">
             {convert_date(props.customers.NoDayUpdate)}
           </Descriptions.Item>
-
-          
         </Descriptions>
       </Form>
     </div>

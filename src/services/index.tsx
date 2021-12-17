@@ -641,6 +641,23 @@ function check_mst(req: any) {
     })
     .catch((err) => console.log(err));
 }
+
+function backup_database(req: any) {
+  let bodybackupdatabase = {
+    secretKey: secretKey,
+    dbName: req.dbName,
+    username: req.username,
+    id: req.id,
+  };
+  return axios
+    .post(`${URL}/nap/backup_database`, bodybackupdatabase)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+}
+
+
 export const Services = {
   check_mst,
   deleteCustomerRegister,
@@ -683,4 +700,5 @@ export const Services = {
   insert_port_v2,
   create_login,
   add_config_database,
+  backup_database
 };
